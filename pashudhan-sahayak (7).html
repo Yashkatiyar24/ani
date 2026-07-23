@@ -1,0 +1,1326 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#14532D">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Pashudhan Sahayak">
+<title>पशुधन सहायक — UP Livestock Guide</title>
+<style>
+  :root{
+    --green:#1F6E43;--green-dark:#14532D;--green-soft:#E7F0E8;
+    --gold:#E0A030;--gold-soft:#FBEBCB;--ink:#2A2118;--ink-soft:#6B5E4E;
+    --paper:#F5F0E6;--card:#FFFDF8;--red:#C62828;--line:#E6DECB;
+    --shadow:0 2px 10px rgba(42,33,24,.08);
+  }
+  *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+  html,body{background:var(--paper);color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Noto Sans","Noto Sans Devanagari",Arial,sans-serif;
+    line-height:1.55;font-size:16px;-webkit-font-smoothing:antialiased}
+  body{max-width:560px;margin:0 auto;min-height:100vh;position:relative;padding-bottom:88px}
+
+  header{position:sticky;top:0;z-index:30;
+    background:linear-gradient(160deg,var(--green) 0%,var(--green-dark) 100%);
+    color:#fff;padding:14px 16px;padding-top:max(14px,env(safe-area-inset-top,0));
+    box-shadow:0 3px 14px rgba(20,83,45,.28)}
+  .headrow{display:flex;align-items:center;justify-content:space-between;gap:10px}
+  .brand{display:flex;align-items:center;gap:11px;min-width:0}
+  .logo{width:44px;height:44px;flex:0 0 44px;border-radius:12px;
+    background:radial-gradient(circle at 30% 30%,#F2C05A,var(--gold));
+    display:flex;align-items:center;justify-content:center;font-size:24px;
+    box-shadow:inset 0 0 0 2px rgba(255,255,255,.35)}
+  .brand h1{font-size:19px;font-weight:800;letter-spacing:.2px;line-height:1.15}
+  .brand .sub{font-size:11px;font-weight:500;opacity:.85;letter-spacing:.3px;text-transform:uppercase}
+  .back{background:rgba(255,255,255,.16);border:none;color:#fff;font-size:15px;font-weight:700;
+    padding:7px 12px;border-radius:20px;display:none;align-items:center;gap:5px;cursor:pointer}
+  .back.show{display:inline-flex}
+  .langtog{background:rgba(255,255,255,.16);border:1.5px solid rgba(255,255,255,.4);
+    color:#fff;font-size:13.5px;font-weight:800;padding:6px 12px;border-radius:20px;
+    cursor:pointer;flex:0 0 auto;letter-spacing:.3px}
+
+  .sos{display:flex;align-items:center;gap:12px;margin:12px 14px 0;
+    background:var(--card);border:1.5px solid var(--red);border-radius:16px;
+    padding:12px 14px;box-shadow:var(--shadow);text-decoration:none;color:var(--ink)}
+  .sos .ic{width:46px;height:46px;flex:0 0 46px;border-radius:12px;background:var(--red);
+    color:#fff;font-size:24px;display:flex;align-items:center;justify-content:center}
+  .sos .t{flex:1;min-width:0}
+  .sos .t b{display:block;font-size:15px;font-weight:800;color:var(--red)}
+  .sos .t span{font-size:12px;color:var(--ink-soft)}
+  .sos .num{font-size:24px;font-weight:900;color:var(--red);letter-spacing:.5px}
+
+  .wrap{padding:14px}
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .tile{background:var(--card);border:1px solid var(--line);border-radius:18px;
+    padding:15px 13px 14px;cursor:pointer;box-shadow:var(--shadow);
+    display:flex;flex-direction:column;gap:7px;transition:transform .08s ease}
+  .tile:active{transform:scale(.97)}
+  .tile .emo{width:46px;height:46px;border-radius:13px;display:flex;align-items:center;
+    justify-content:center;font-size:25px;background:var(--green-soft)}
+  .tile.t-feed .emo,.tile.t-sch .emo,.tile.t-calc .emo{background:var(--gold-soft)}
+  .tile.t-vac .emo,.tile.t-dist .emo{background:#E6F0FA}
+  .tile.t-kvk .emo{background:#E7F0E8}
+  .tile.t-dis .emo,.tile.t-help .emo{background:#FBE7E4}
+  .tile.t-about .emo{background:var(--gold-soft)}
+  .tile.t-articles .emo{background:#E6F0FA}
+  .aboutcard{text-align:center}
+  .aboutcard .avatar{width:104px;height:104px;border-radius:50%;margin:2px auto 10px;overflow:hidden;
+    background:radial-gradient(circle at 32% 30%,#F2C05A,var(--gold));display:flex;
+    align-items:center;justify-content:center;font-size:38px;
+    box-shadow:inset 0 0 0 3px rgba(255,255,255,.4)}
+  .aboutcard .avatar img{width:100%;height:100%;object-fit:cover;display:block}
+  .aboutcard h3{justify-content:center;font-size:20px}
+  .aboutcard .role{color:var(--green-dark);font-weight:700;font-size:14px;margin-top:2px}
+  .aboutcard .degree{font-size:12.5px;font-weight:800;color:#8a5a00;letter-spacing:.3px;margin-top:4px}
+  .aboutcard ul.clean{text-align:left;display:inline-block;margin:12px auto 0}
+  .aboutcard .mission{margin-top:12px;font-size:13.5px;color:var(--ink)}
+  .devcredit{display:block;text-align:center;margin-top:14px;padding:11px;
+    background:var(--card);border:1px solid var(--line);border-radius:14px;
+    font-size:13.5px;font-weight:800;color:var(--green-dark);box-shadow:var(--shadow);cursor:pointer}
+  .devcredit span{color:var(--gold);font-weight:900}
+  .tile .hi{font-size:15.5px;font-weight:800;line-height:1.2}
+  .tile .en{font-size:11px;color:var(--ink-soft);font-weight:600;letter-spacing:.2px;text-transform:uppercase}
+
+  section{display:none;padding:14px}
+  section.active{display:block;animation:fade .25s ease}
+  @keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+  .sec-head{margin:2px 2px 14px}
+  .sec-head h2{font-size:21px;font-weight:900;letter-spacing:.2px}
+  .sec-head p{font-size:12.5px;color:var(--ink-soft);margin-top:3px}
+
+  .card{background:var(--card);border:1px solid var(--line);border-radius:16px;
+    padding:15px 16px;margin-bottom:12px;box-shadow:var(--shadow)}
+  .card h3{font-size:16px;font-weight:800;display:flex;align-items:baseline;gap:8px;flex-wrap:wrap}
+  .card h3 .native{font-weight:600;font-size:13px;color:var(--green);
+    background:var(--green-soft);padding:1px 8px;border-radius:10px}
+  .card p{font-size:14px;color:var(--ink);margin-top:7px}
+  .card .lead{color:var(--ink-soft);font-size:13px;margin-top:3px}
+  .yield{display:inline-flex;align-items:center;gap:6px;background:var(--gold-soft);
+    color:#8a5a00;font-weight:800;font-size:13px;padding:4px 11px;border-radius:20px;margin-top:9px}
+  .tag{display:inline-block;font-size:11.5px;font-weight:700;color:var(--green-dark);
+    background:#EEF6EE;border-radius:8px;padding:3px 9px;margin:8px 6px 0 0}
+
+  .grouplabel{font-size:12px;font-weight:800;letter-spacing:1px;text-transform:uppercase;
+    color:var(--gold);margin:6px 4px 10px;display:flex;align-items:center;gap:9px}
+  .grouplabel::after{content:"";flex:1;height:2px;border-radius:2px;
+    background:linear-gradient(90deg,var(--gold),transparent)}
+
+  ul.clean{list-style:none;margin-top:9px}
+  ul.clean li{position:relative;padding-left:22px;font-size:14px;margin-bottom:8px;color:var(--ink)}
+  ul.clean li::before{content:"";position:absolute;left:4px;top:9px;width:8px;height:8px;
+    border-radius:50%;background:var(--gold)}
+
+  .vtable{width:100%;border-collapse:collapse;margin-top:4px;font-size:13px}
+  .vtable th{background:var(--green);color:#fff;text-align:left;padding:9px 10px;font-size:12px;font-weight:700}
+  .vtable th:first-child{border-radius:10px 0 0 0}
+  .vtable th:last-child{border-radius:0 10px 0 0}
+  .vtable td{padding:9px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+  .vtable tr:last-child td{border-bottom:none}
+  .vtable td:first-child{font-weight:700;color:var(--green-dark)}
+  .vtable small{color:var(--ink-soft)}
+
+  .dline{font-size:13.5px;margin-top:7px}
+  .dline .k{font-weight:800;color:var(--red)}
+  .dline.pv .k{color:var(--green)}
+  .pbtn{display:inline-flex;align-items:center;gap:6px;margin-top:11px;text-decoration:none;
+    font-weight:800;font-size:13px;padding:9px 14px;border-radius:10px;background:#E6F0FA;color:#1d4e7a}
+  .dart{background:#FBF7EE;border:1px solid var(--line);border-radius:12px;
+    padding:10px 8px 7px;margin:11px 0 2px;text-align:center}
+  .dart svg{width:100%;max-width:240px;height:auto;display:inline-block}
+  .dartcap{display:block;font-size:12px;color:var(--ink-soft);font-weight:700;margin-top:3px}
+
+  .card .money{font-weight:800;color:var(--green-dark)}
+  a.link{color:var(--green-dark);font-weight:700;text-decoration:none;word-break:break-all;
+    border-bottom:2px solid var(--gold-soft)}
+
+  a.callbtn{display:flex;align-items:center;gap:13px;background:var(--card);
+    border:1px solid var(--line);border-radius:14px;padding:13px 15px;margin-bottom:11px;
+    text-decoration:none;color:var(--ink);box-shadow:var(--shadow)}
+  a.callbtn .cic{width:44px;height:44px;flex:0 0 44px;border-radius:11px;display:flex;
+    align-items:center;justify-content:center;font-size:22px;background:var(--green-soft)}
+  a.callbtn.red .cic{background:#FCE4E4}
+  a.callbtn .ct{flex:1;min-width:0}
+  a.callbtn .ct b{display:block;font-size:15px;font-weight:800}
+  a.callbtn .ct span{font-size:12.5px;color:var(--ink-soft)}
+  a.callbtn .arrow{font-size:20px;color:var(--gold);font-weight:900}
+
+  .note{font-size:12.5px;color:var(--ink-soft);background:var(--gold-soft);
+    border-radius:12px;padding:11px 13px;margin-top:6px;line-height:1.55}
+  .note b{color:#8a5a00}
+
+  .college{border:1px solid var(--line);border-radius:13px;padding:12px 13px;margin-top:10px;background:#fff}
+  .college .cn{font-size:14.5px;font-weight:800;line-height:1.25}
+  .college .csub{font-size:12px;color:var(--ink-soft);margin-top:2px}
+  .college .cmeta{font-size:12.5px;margin-top:6px}
+  .college .cmeta .badge{display:inline-block;background:var(--green-soft);color:var(--green-dark);
+    font-weight:700;border-radius:8px;padding:2px 8px;margin-right:7px}
+  .college .cbtns{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap}
+  .college .cbtn{display:inline-flex;align-items:center;gap:6px;text-decoration:none;
+    font-weight:800;font-size:13px;padding:8px 13px;border-radius:10px}
+  .college .cbtn.map{background:var(--green);color:#fff}
+  .college .cbtn.web{background:var(--gold-soft);color:#5a3d00}
+
+  /* district */
+  .search{width:100%;padding:13px 15px;font-size:15px;border:1.5px solid var(--line);
+    border-radius:14px;background:var(--card);color:var(--ink);margin-bottom:12px;
+    font-family:inherit}
+  .search:focus{outline:none;border-color:var(--green)}
+  .dlist{display:flex;flex-direction:column;gap:8px}
+  .drow{background:var(--card);border:1px solid var(--line);border-radius:13px;
+    padding:13px 15px;cursor:pointer;box-shadow:var(--shadow)}
+  .drow .dtop{display:flex;align-items:center;justify-content:space-between;gap:8px}
+  .drow .dn{font-size:15px;font-weight:800}
+  .drow .dn small{font-weight:600;color:var(--ink-soft);font-size:12.5px;margin-left:6px}
+  .drow .chev{color:var(--gold);font-weight:900;font-size:18px;transition:transform .2s}
+  .drow.open .chev{transform:rotate(90deg)}
+  .dpanel{display:none;margin-top:11px;padding-top:11px;border-top:1px dashed var(--line)}
+  .drow.open .dpanel{display:block}
+  .dpanel p{font-size:13px;color:var(--ink);margin-bottom:10px}
+  .dbtns{display:flex;flex-direction:column;gap:8px}
+  .dbtn{display:flex;align-items:center;gap:9px;text-decoration:none;font-weight:800;
+    font-size:14px;padding:11px 14px;border-radius:12px;color:#fff}
+  .dbtn.map{background:var(--green)}
+  .dbtn.office{background:var(--gold);color:#5a3d00}
+  .dbtn.call{background:var(--red)}
+  .dbtn .dba{margin-left:auto;font-weight:900;opacity:.85}
+
+  /* calculator */
+  .field{margin-bottom:13px}
+  .field label{display:block;font-size:13.5px;font-weight:700;margin-bottom:6px}
+  .field input,.field select{width:100%;padding:12px 14px;font-size:16px;border:1.5px solid var(--line);
+    border-radius:12px;background:var(--card);color:var(--ink);font-family:inherit}
+  .field input:focus,.field select:focus{outline:none;border-color:var(--green)}
+  .calcbtn{width:100%;background:var(--green);color:#fff;border:none;border-radius:14px;
+    padding:14px;font-size:16px;font-weight:800;cursor:pointer;margin-top:4px;box-shadow:var(--shadow)}
+  .result{margin-top:14px}
+  .rrow{display:flex;align-items:center;justify-content:space-between;gap:10px;
+    padding:12px 0;border-bottom:1px solid var(--line)}
+  .rrow:last-child{border-bottom:none}
+  .rrow .rl{font-size:14px;font-weight:600}
+  .rrow .rl .ric{margin-right:8px}
+  .rrow .rv{font-size:16px;font-weight:800;color:var(--green-dark);white-space:nowrap}
+  .rrow.cost .rv{color:#8a5a00}
+
+  footer{text-align:center;font-size:11.5px;color:var(--ink-soft);padding:6px 20px 20px}
+
+  .homebar{position:fixed;left:0;right:0;bottom:0;z-index:40;max-width:560px;margin:0 auto;
+    padding:10px 14px calc(10px + env(safe-area-inset-bottom,0));
+    background:linear-gradient(180deg,rgba(245,240,230,0) 0%,var(--paper) 30%)}
+  .homebtn{width:100%;background:var(--green-dark);color:#fff;border:none;border-radius:16px;
+    padding:14px;font-size:15.5px;font-weight:800;cursor:pointer;display:flex;
+    align-items:center;justify-content:center;gap:9px;box-shadow:0 4px 16px rgba(20,83,45,.32)}
+
+  /* ===== website chrome ===== */
+  .bgart{position:fixed;inset:0;z-index:-1;
+    background:
+      radial-gradient(1100px 600px at 84% -10%,rgba(224,160,48,.16),transparent 60%),
+      radial-gradient(1000px 720px at 8% 112%,rgba(31,110,67,.18),transparent 60%),
+      linear-gradient(160deg,#F7F3EA 0%,#ECE3D1 100%)}
+  .bgart::after{content:"";position:absolute;inset:0;opacity:.55;
+    background-image:radial-gradient(rgba(31,110,67,.07) 1px,transparent 1px);background-size:24px 24px}
+
+  .webnav,.hero,.webfoot,.backchip,.svchead{display:none}
+
+  /* download call-to-action (in flow, mobile + tablet) */
+  .dlbanner{display:flex;align-items:center;gap:13px;margin:12px 14px 0;
+    background:linear-gradient(135deg,#123f27,#1F6E43);color:#fff;border-radius:18px;
+    padding:13px 15px;box-shadow:0 10px 26px rgba(20,83,45,.30);text-decoration:none}
+  .dlbanner .dlic{width:50px;height:50px;flex:0 0 50px;border-radius:13px;background:#fff;overflow:hidden;
+    display:flex;align-items:center;justify-content:center;box-shadow:0 2px 8px rgba(0,0,0,.18)}
+  .dlbanner .dlic img{width:100%;height:100%;object-fit:cover}
+  .dlbanner .dlt{flex:1;min-width:0}
+  .dlbanner .dlt b{display:block;font-size:15px;font-weight:800;line-height:1.25}
+  .dlbanner .dlt span{font-size:11.5px;opacity:.85}
+  .dlbanner .dlgo{background:var(--gold);color:#4a3000;font-weight:900;font-size:13px;
+    padding:9px 13px;border-radius:12px;white-space:nowrap;box-shadow:0 3px 10px rgba(224,160,48,.4)}
+
+  /* article cards */
+  .artcard .artcover{display:flex;align-items:center;justify-content:space-between;
+    border-radius:13px;padding:15px;margin-bottom:12px;
+    background:linear-gradient(135deg,var(--green-soft),#DCEBDD)}
+  .artcard.a2 .artcover{background:linear-gradient(135deg,#FBEBCB,#F5DEAB)}
+  .artcard.a3 .artcover{background:linear-gradient(135deg,#E6F0FA,#D3E4F4)}
+  .artcard.a4 .artcover{background:linear-gradient(135deg,#FBE7E4,#F5D5CF)}
+  .artcard .artemo{font-size:36px;line-height:1}
+  .artcard .artpg{font-size:11px;font-weight:800;letter-spacing:.5px;color:var(--green-dark);
+    background:rgba(255,255,255,.72);padding:5px 11px;border-radius:20px;text-transform:uppercase}
+  .artview{display:flex;align-items:center;gap:8px;margin-top:13px;text-decoration:none;
+    font-weight:800;font-size:14px;padding:12px 15px;border-radius:12px;
+    background:var(--green);color:#fff;box-shadow:0 3px 10px rgba(31,110,67,.3)}
+  .artview .av{margin-left:auto;font-weight:900;font-size:18px}
+
+  @media (min-width:1100px){
+    :root{--sitew:1180px;--gutter:32px}
+    body{max-width:none;margin:0;padding:0}
+    header,.sos,.dlbanner,.homebar,footer{display:none}
+    html{scroll-behavior:smooth}
+
+    /* ── top navigation ─────────────────────────── */
+    .webnav{display:block;position:sticky;top:0;z-index:60;
+      background:rgba(245,240,230,.86);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+      border-bottom:1px solid var(--line)}
+    .wn-in{max-width:var(--sitew);margin:0 auto;display:flex;align-items:center;gap:34px;padding:12px var(--gutter)}
+    .wn-brand{display:flex;align-items:center;gap:12px;text-decoration:none;color:var(--ink);margin-right:auto}
+    .wn-brand img{width:42px;height:42px;border-radius:12px;box-shadow:0 3px 10px rgba(20,83,45,.22)}
+    .wn-brand b{display:block;font-size:17px;font-weight:900;color:var(--green-dark);line-height:1.1}
+    .wn-brand small{font-size:10px;font-weight:700;letter-spacing:1.4px;color:var(--ink-soft)}
+    .wn-links{display:flex;gap:6px}
+    .wn-links a{text-decoration:none;color:var(--ink);font-weight:700;font-size:14.5px;
+      padding:9px 15px;border-radius:11px;transition:background .15s,color .15s}
+    .wn-links a:hover{background:var(--green-soft);color:var(--green-dark)}
+    .wn-lang{background:none;border:1.5px solid var(--line);color:var(--ink);font-weight:800;
+      font-size:13px;padding:8px 14px;border-radius:11px;cursor:pointer;font-family:inherit}
+    .wn-lang:hover{border-color:var(--green);color:var(--green-dark)}
+    .wn-cta{display:flex;align-items:center;gap:10px}
+    .wn-dl{display:inline-flex;align-items:center;gap:8px;text-decoration:none;
+      background:linear-gradient(135deg,#123f27,var(--green));color:#fff;font-weight:800;font-size:14px;
+      padding:10px 18px;border-radius:12px;box-shadow:0 6px 16px rgba(20,83,45,.28);transition:transform .15s,box-shadow .15s}
+    .wn-dl:hover{transform:translateY(-1px);box-shadow:0 10px 22px rgba(20,83,45,.36)}
+
+    /* ── hero ───────────────────────────────────── */
+    .hero{display:block;overflow:hidden;position:relative}
+    .hero-in{max-width:var(--sitew);margin:0 auto;display:grid;grid-template-columns:1.12fr .88fr;
+      gap:64px;padding:78px var(--gutter) 70px;align-items:center}
+    .hero-badge{display:inline-flex;align-items:center;gap:8px;background:var(--gold-soft);color:#8a5a00;
+      font-weight:800;font-size:13px;padding:8px 16px;border-radius:24px;margin-bottom:22px}
+    .hero h2{font-size:clamp(40px,4.1vw,56px);font-weight:900;line-height:1.1;color:var(--ink);letter-spacing:-.5px}
+    .hero h2 em{font-style:normal;color:var(--green-dark);
+      background:linear-gradient(transparent 68%,var(--gold-soft) 68%)}
+    .hero-sub{font-size:17px;color:var(--ink-soft);line-height:1.75;margin-top:20px;max-width:52ch}
+    .hero-btns{display:flex;align-items:center;gap:14px;margin-top:32px;flex-wrap:wrap}
+    .hb-dl{display:inline-flex;align-items:center;gap:13px;text-decoration:none;
+      background:linear-gradient(135deg,#123f27,var(--green));color:#fff;padding:15px 26px;border-radius:16px;
+      font-weight:800;font-size:16.5px;box-shadow:0 16px 34px rgba(20,83,45,.32);transition:transform .15s,box-shadow .15s}
+    .hb-dl:hover{transform:translateY(-2px);box-shadow:0 22px 44px rgba(20,83,45,.4)}
+    .hb-dl img{width:38px;height:38px;border-radius:10px}
+    .hb-dl small{display:block;font-size:11px;font-weight:600;opacity:.82;letter-spacing:.4px}
+    .hb-art{display:inline-flex;align-items:center;gap:9px;text-decoration:none;color:var(--green-dark);
+      font-weight:800;font-size:15.5px;padding:15px 24px;border-radius:16px;border:2px solid var(--green);
+      transition:background .15s}
+    .hb-art:hover{background:var(--green-soft)}
+    .hero-trust{margin-top:26px;font-size:13px;color:var(--ink-soft);font-weight:600;
+      display:flex;align-items:center;gap:8px}
+    .hero-trust::before{content:"✔";color:var(--green);font-weight:900}
+
+    .hero-r{display:flex;flex-direction:column;gap:18px}
+    .hero-sos{display:flex;align-items:center;gap:16px;text-decoration:none;color:var(--ink);
+      background:var(--card);border:1.5px solid var(--red);border-radius:20px;padding:18px 22px;
+      box-shadow:0 14px 34px rgba(198,40,40,.14);font-size:30px;transition:transform .15s}
+    .hero-sos:hover{transform:translateY(-2px)}
+    .hero-sos div{flex:1}
+    .hero-sos b{display:block;font-size:17px;font-weight:900;color:var(--red)}
+    .hero-sos span{font-size:13px;color:var(--ink-soft);font-weight:600}
+    .hero-sos em{font-style:normal;font-size:14px;font-weight:900;color:var(--red);white-space:nowrap}
+    .hero-stats{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+    .hero-stats>div{background:var(--card);border:1px solid var(--line);border-radius:18px;
+      padding:20px 20px 17px;box-shadow:var(--shadow)}
+    .hero-stats b{display:block;font-size:34px;font-weight:900;color:var(--green-dark);line-height:1}
+    .hero-stats span{display:block;font-size:12.5px;color:var(--ink-soft);font-weight:700;margin-top:7px;line-height:1.45}
+
+    /* ── main containers ────────────────────────── */
+    .wrap{max-width:var(--sitew);margin:0 auto;padding:10px var(--gutter) 84px}
+    section{max-width:var(--sitew);margin:0 auto;padding:34px var(--gutter) 96px}
+    section.active{animation:fade .3s ease}
+    .sec-head{margin:0 0 26px}
+    .sec-head h2{font-size:32px}
+    .sec-head p{font-size:14.5px;margin-top:6px}
+
+    .svchead{display:block;text-align:center;padding:8px 0 30px}
+    .svchead h2{font-size:32px;font-weight:900;color:var(--ink)}
+    .svchead h2 span{color:var(--green-dark)}
+    .svchead p{font-size:15px;color:var(--ink-soft);margin-top:8px;font-weight:600}
+
+    .grid{grid-template-columns:repeat(4,1fr);gap:18px}
+    .tile{padding:22px 20px 19px;gap:10px;border-radius:20px;transition:transform .18s,box-shadow .18s}
+    .tile:hover{transform:translateY(-4px);box-shadow:0 16px 34px rgba(42,33,24,.14)}
+    .tile .emo{width:54px;height:54px;font-size:29px;border-radius:15px}
+    .tile .hi{font-size:17.5px}
+    .tile .en{font-size:11.5px}
+    .devcredit{margin-top:22px;padding:14px;font-size:14px}
+
+    /* content sections → magazine columns */
+    #breedsBody,#feedBody,#vaccineBody,#diseaseBody,#schemeBody,#helpBody{columns:2;column-gap:18px}
+    .card{break-inside:avoid;margin-bottom:18px;border-radius:18px;padding:19px 21px;transition:box-shadow .18s}
+    a.callbtn{break-inside:avoid}
+    .card:hover{box-shadow:0 12px 30px rgba(42,33,24,.12)}
+
+    #articlesBody{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
+    .artcard{margin-bottom:0;display:flex;flex-direction:column}
+    .artcard .artview{margin-top:auto}
+    .artcard .lead{margin-bottom:14px}
+    .artview{transition:filter .15s}
+    .artview:hover{filter:brightness(1.12)}
+
+    .dlist{display:grid;grid-template-columns:1fr 1fr;gap:10px;align-items:start}
+    .search{max-width:560px}
+    #calc .card,#aboutBody{max-width:700px}
+
+    /* back-to-home chip when inside a section */
+    body.insection .hero{display:none}
+    body.insection .backchip{display:inline-flex}
+    .backchip{position:fixed;left:26px;bottom:26px;z-index:55;align-items:center;gap:8px;
+      background:var(--green-dark);color:#fff;border:none;font-family:inherit;font-weight:800;font-size:14px;
+      padding:13px 21px;border-radius:30px;cursor:pointer;box-shadow:0 12px 30px rgba(20,83,45,.4)}
+    .backchip:hover{filter:brightness(1.15)}
+
+    /* ── footer ─────────────────────────────────── */
+    .webfoot{display:block;background:var(--green-dark);color:#fff;margin-top:20px}
+    .wf-in{max-width:var(--sitew);margin:0 auto;display:grid;grid-template-columns:1.3fr 1fr 1fr;
+      gap:48px;padding:52px var(--gutter) 40px}
+    .wf-brand img{width:52px;height:52px;border-radius:14px;margin-bottom:14px}
+    .wf-col>b{display:block;font-size:16px;font-weight:900;margin-bottom:14px}
+    .wf-col p{font-size:13.5px;line-height:1.7;opacity:.75}
+    .wf-col a{display:block;color:#fff;text-decoration:none;font-size:14px;font-weight:600;
+      opacity:.78;padding:5px 0;transition:opacity .15s}
+    .wf-col a:hover{opacity:1}
+    .wf-col .wf-tel{display:flex;align-items:baseline;gap:8px;font-size:14px;padding:5px 0;opacity:.85}
+    .wf-col .wf-tel b{font-weight:900;color:var(--gold)}
+    .wf-bottom{border-top:1px solid rgba(255,255,255,.14);text-align:center;
+      font-size:12.5px;opacity:.62;padding:18px var(--gutter);max-width:var(--sitew);margin:0 auto}
+  }
+</style>
+</head>
+<body>
+
+<div class="bgart"></div>
+
+<nav class="webnav">
+  <div class="wn-in">
+    <a class="wn-brand" href="#" onclick="goHome();return false;">
+      <img src="r.png" alt="पशुधन सहायक">
+      <span><b>पशुधन सहायक</b><small>UP LIVESTOCK GUIDE</small></span>
+    </a>
+    <div class="wn-links">
+      <a href="#" onclick="goHome();return false;" data-i18n="nav_home">होम</a>
+      <a href="#" onclick="show('articles');return false;" data-i18n="nav_art">लेख</a>
+      <a href="#" onclick="show('scheme');return false;" data-i18n="nav_sch">योजनाएँ</a>
+      <a href="#" onclick="show('help');return false;" data-i18n="nav_help">सहायता</a>
+      <a href="#" onclick="show('about');return false;" data-i18n="nav_about">परिचय</a>
+    </div>
+    <div class="wn-cta">
+      <button class="wn-lang" id="langBtn2" onclick="toggleLang()">EN</button>
+      <a class="wn-dl" href="PashudhanSahayak.apk" download data-i18n="nav_dl">⬇ ऐप डाउनलोड</a>
+    </div>
+  </div>
+</nav>
+
+<div class="hero">
+  <div class="hero-in">
+    <div class="hero-l">
+      <span class="hero-badge" data-i18n="hero_badge">🐄 उत्तर प्रदेश के पशुपालकों के लिए · 100% निःशुल्क</span>
+      <h2 data-i18n="hero_h2">पशुपालन की हर जानकारी,<br><em>एक ही जगह।</em></h2>
+      <p class="hero-sub" data-i18n="hero_sub">नस्ल चयन से लेकर टीकाकरण, चारा-लागत कैलकुलेटर, सरकारी योजनाएँ, 75 जिलों के पशु अस्पताल और विशेषज्ञ लेख — हिंदी व अंग्रेज़ी में, बिल्कुल मुफ़्त।</p>
+      <div class="hero-btns">
+        <a class="hb-dl" href="PashudhanSahayak.apk" download>
+          <img src="r.png" alt="">
+          <span data-i18n="hero_dl">ऐप डाउनलोड करें<small>ANDROID · APK · FREE</small></span>
+        </a>
+        <a class="hb-art" href="#" onclick="show('articles');return false;" data-i18n="hero_art">📄 विशेषज्ञ लेख पढ़ें</a>
+      </div>
+      <div class="hero-trust" data-i18n="hero_trust">डॉ. एनिमेष पटेल (NDRI, करनाल) द्वारा · कोई विज्ञापन नहीं · कोई लॉगिन नहीं</div>
+    </div>
+    <div class="hero-r">
+      <a class="hero-sos" href="tel:1962">🚑
+        <div><b data-i18n="hsos_b">पशु एम्बुलेंस — 1962</b><span data-i18n="hsos_s">निःशुल्क घर पर पशु चिकित्सा · 24×7 कॉल सेंटर</span></div>
+        <em data-i18n="hsos_cta">कॉल करें ›</em>
+      </a>
+      <div class="hero-stats">
+        <div><b>75</b><span data-i18n="st1">जिलों के पशु अस्पताल व संपर्क</span></div>
+        <div><b>4</b><span data-i18n="st2">विशेषज्ञ लेख (PDF)</span></div>
+        <div><b>11</b><span data-i18n="st3">सेवाएँ, गाइड व कैलकुलेटर</span></div>
+        <div><b>2</b><span data-i18n="st4">भाषाएँ — हिंदी व English</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<button class="backchip" onclick="goHome()" data-i18n="back">← होम पर वापस</button>
+
+<header>
+  <div class="headrow">
+    <div class="brand">
+      <button class="back" id="backBtn" onclick="goHome()">←</button>
+      <div class="logo">🐄</div>
+      <div>
+        <h1 id="appName">पशुधन सहायक</h1>
+        <div class="sub">Pashudhan Sahayak · UP</div>
+      </div>
+    </div>
+    <button class="langtog" id="langBtn" onclick="toggleLang()">EN</button>
+  </div>
+</header>
+
+<a class="sos" href="tel:1962">
+  <div class="ic">🚑</div>
+  <div class="t"><b id="sosT"></b><span id="sosS"></span></div>
+  <div class="num">1962</div>
+</a>
+
+<a class="dlbanner" href="PashudhanSahayak.apk" download>
+  <span class="dlic"><img src="r.png" alt="Download"></span>
+  <span class="dlt"><b>ऐप डाउनलोड करें · Download App</b><span>Android APK · फ़ोन पर इंस्टॉल करें</span></span>
+  <span class="dlgo">⬇ APK</span>
+</a>
+
+<!-- HOME -->
+<div class="wrap" id="home">
+  <div class="svchead"><h2 data-i18n="svc_h">सेवाएँ व <span>उपकरण</span></h2><p data-i18n="svc_p">किसी भी कार्ड पर क्लिक करें — पूरी जानकारी इसी पृष्ठ पर खुलेगी</p></div>
+  <div class="grid" id="tiles"></div>
+  <div class="devcredit" id="devCredit" onclick="show('about')"></div>
+  <footer id="homeFoot"></footer>
+</div>
+
+<!-- SECTIONS -->
+<section id="breeds"><div class="sec-head"><h2 id="h_breeds"></h2><p id="s_breeds"></p></div><div id="breedsBody"></div></section>
+<section id="feed"><div class="sec-head"><h2 id="h_feed"></h2><p id="s_feed"></p></div><div id="feedBody"></div></section>
+<section id="vaccine"><div class="sec-head"><h2 id="h_vaccine"></h2><p id="s_vaccine"></p></div><div id="vaccineBody"></div></section>
+<section id="disease"><div class="sec-head"><h2 id="h_disease"></h2><p id="s_disease"></p></div><div id="diseaseBody"></div></section>
+<section id="scheme"><div class="sec-head"><h2 id="h_scheme"></h2><p id="s_scheme"></p></div><div id="schemeBody"></div></section>
+<section id="district"><div class="sec-head"><h2 id="h_district"></h2><p id="s_district"></p></div>
+  <input class="search" id="dsearch" oninput="renderDistricts()" >
+  <div class="note" id="distNote" style="margin-bottom:12px"></div>
+  <div class="dlist" id="dlist"></div>
+</section>
+<section id="kvk"><div class="sec-head"><h2 id="h_kvk"></h2><p id="s_kvk"></p></div>
+  <div class="card" id="kvkInfoCard"></div>
+  <input class="search" id="kvksearch" oninput="renderKVK()">
+  <div class="note" id="kvkNote" style="margin-bottom:12px"></div>
+  <div class="dlist" id="kvklist"></div>
+</section>
+<section id="calc"><div class="sec-head"><h2 id="h_calc"></h2><p id="s_calc"></p></div>
+  <div class="card">
+    <div class="field"><label id="l_type"></label>
+      <select id="c_type"><option value="cow"></option><option value="buffalo"></option></select></div>
+    <div class="field"><label id="l_bw"></label><input id="c_bw" type="number" inputmode="numeric" value="400"></div>
+    <div class="field"><label id="l_milk"></label><input id="c_milk" type="number" inputmode="decimal" value="8"></div>
+    <div class="field"><label id="l_price"></label><input id="c_price" type="number" inputmode="numeric" value="25"></div>
+    <button class="calcbtn" id="c_btn" onclick="calcFeed()"></button>
+    <div class="result" id="c_result" style="display:none"></div>
+  </div>
+  <div class="note" id="calcNote"></div>
+</section>
+<section id="help"><div class="sec-head"><h2 id="h_help"></h2><p id="s_help"></p></div><div id="helpBody"></div></section>
+<section id="articles"><div class="sec-head"><h2 id="h_articles"></h2><p id="s_articles"></p></div><div id="articlesBody"></div></section>
+<section id="about"><div class="sec-head"><h2 id="h_about"></h2><p id="s_about"></p></div><div id="aboutBody"></div></section>
+
+<div class="homebar"><button class="homebtn" id="homeBtnTxt" onclick="goHome()"></button></div>
+
+<div class="webfoot">
+  <div class="wf-in">
+    <div class="wf-col wf-brand">
+      <img src="r.png" alt="">
+      <b>पशुधन सहायक</b>
+      <p data-i18n="wf_blurb">उत्तर प्रदेश के पशुपालकों हेतु निःशुल्क डिजिटल गाइड — नस्ल, स्वास्थ्य, चारा प्रबंधन, सरकारी योजनाएँ व विशेषज्ञ लेख। हिंदी व अंग्रेज़ी में उपलब्ध।</p>
+    </div>
+    <div class="wf-col">
+      <b data-i18n="wf_ql">त्वरित लिंक</b>
+      <a href="#" onclick="show('breeds');return false;" data-i18n="wf_l1">नस्ल गाइड</a>
+      <a href="#" onclick="show('vaccine');return false;" data-i18n="wf_l2">टीकाकरण</a>
+      <a href="#" onclick="show('calc');return false;" data-i18n="wf_l3">आहार कैलकुलेटर</a>
+      <a href="#" onclick="show('scheme');return false;" data-i18n="wf_l4">सरकारी योजनाएँ</a>
+      <a href="#" onclick="show('articles');return false;" data-i18n="wf_l5">विशेषज्ञ लेख (PDF)</a>
+      <a href="PashudhanSahayak.apk" download data-i18n="wf_l6">⬇ Android ऐप डाउनलोड</a>
+    </div>
+    <div class="wf-col">
+      <b data-i18n="wf_help">हेल्पलाइन</b>
+      <div class="wf-tel"><b>1962</b> <span data-i18n="wf_t1">पशु एम्बुलेंस · 24×7</span></div>
+      <div class="wf-tel"><b>1800-180-1551</b> <span data-i18n="wf_t2">किसान कॉल सेंटर</span></div>
+      <div class="wf-tel"><b>+91-565-2471178</b> <span data-i18n="wf_t3">DUVASU, मथुरा</span></div>
+    </div>
+  </div>
+  <div class="wf-bottom" data-i18n="wf_bottom">© 2026 पशुधन सहायक · डॉ. एनिमेष पटेल · यह जानकारी सामान्य मार्गदर्शन हेतु है — बीमार पशु के लिए 1962 या नज़दीकी पशु चिकित्सक को कॉल करें।</div>
+</div>
+
+<script>
+/* ============ LANGUAGE + STATE ============ */
+var lang = 'hi';
+function L(o){ return o[lang]; }
+var DEV_PHOTO="data:image/jpeg;base64,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";
+
+/* ---- UI strings ---- */
+var T = {
+  sosT:{hi:'पशु एम्बुलेंस',en:'Animal Ambulance'},
+  sosS:{hi:'निःशुल्क घर पर पशु चिकित्सा — कॉल हेतु दबाएँ',en:'Free doorstep vet care — tap to call'},
+  homeFoot:{hi:'यह जानकारी यूपी के पशुपालकों हेतु सामान्य मार्गदर्शन है। बीमार पशु के लिए 1962 या नज़दीकी पशु चिकित्सक को कॉल करें।',
+            en:'General guidance for UP livestock owners. For any sick animal, call 1962 or your local veterinarian.'},
+  homeBtn:{hi:'🏠 मुख्य पृष्ठ',en:'🏠 Home'},
+  langBtn:{hi:'EN',en:'हिं'},
+  // section heads
+  breeds:{hi:['नस्ल','दूध उत्पादन के आँकड़े प्रति ब्यात अनुमानित हैं, आहार व देखभाल पर निर्भर।'],
+          en:['Breeds','Milk-yield figures are approximate per lactation and vary with feed & care.']},
+  feed:{hi:['आहार प्रबंधन','संतुलित आहार = ज़्यादा दूध, स्वस्थ पशु, कम खर्च।'],
+        en:['Feed Management','Balanced feeding = more milk, healthy animals, lower cost.']},
+  vaccine:{hi:['टीकाकरण','गाय व भैंस हेतु। FMD और ब्रूसीलोसिस के टीके सरकार निःशुल्क लगाती है।'],
+           en:['Vaccination','For cattle & buffalo. FMD and Brucellosis vaccines are given FREE by the govt.']},
+  disease:{hi:['रोग','लक्षण जल्दी पहचानें। बीमार पशु अलग रखें और तुरंत पशु चिकित्सक बुलाएँ।'],
+           en:['Common Diseases','Know the signs early. Isolate sick animals and call a vet quickly.']},
+  scheme:{hi:['सरकारी योजनाएं','डेयरी, नस्ल सुधार, ऋण और निःशुल्क टीकाकरण हेतु सहायता।'],
+          en:['Govt Schemes','Support for dairy, breeding, loans and free vaccination.']},
+  district:{hi:['जिलेवार पशु अस्पताल','अपना जिला खोजें — हर जिले में सरकारी पशु चिकित्सालय है व 1962 सेवा उपलब्ध।'],
+            en:['District Vet Help','Find your district — every district has govt vet hospitals and the 1962 service.']},
+  kvk:{hi:['कृषि विज्ञान केंद्र (KVK)','अपना जिला चुनें → नक्शे पर KVK देखें।'],
+       en:['Krishi Vigyan Kendra (KVK)','Pick your district → see the KVK on the map.']},
+  calc:{hi:['आहार कैलकुलेटर','पशु का वज़न व दूध बताएं — अनुमानित आहार और खर्च पाएं।'],
+        en:['Feed Calculator','Enter the animal\u2019s weight and milk — get an estimate of feed and cost.']},
+  help:{hi:['सहायता व संपर्क','आपातकालीन पशु चिकित्सा, हेल्पलाइन व यूपी के संस्थान।'],
+        en:['Help & Contacts','Emergency vet care, helplines, and veterinary institutions in UP.']},
+  articles:{hi:['लेख','पशुपालन व पशु स्वास्थ्य पर लेख (PDF)'],en:['Articles','Articles on livestock & animal health (PDF)']},
+  articleOpen:{hi:'लेख देखें',en:'View article'},
+  about:{hi:['परिचय','ऐप व डेवलपर के बारे में'],en:['About','About the app & developer']},
+  footerCredit:{hi:'डॉ. अनिमेष पटेल द्वारा विकसित',en:'Developed by Dr. Animesh Patel'},
+  devRole:{hi:'पशु चिकित्सक',en:'Veterinary Doctor'},
+  eduUG:{hi:'स्नातक (B.V.Sc. & A.H.) — पशु चिकित्सा एवं पशुपालन महाविद्यालय (COVAS), मेरठ',
+         en:'B.V.Sc. & A.H. — College of Veterinary & Animal Sciences (COVAS), Meerut'},
+  eduPG:{hi:'स्नातकोत्तर — राष्ट्रीय डेयरी अनुसंधान संस्थान (NDRI), करनाल',
+         en:'Post-graduation — National Dairy Research Institute (NDRI), Karnal'},
+  aboutApp:{hi:'यह ऐप उत्तर प्रदेश के पशुपालकों की मदद के लिए बनाया गया है — नस्ल, आहार, टीकाकरण, रोग, सरकारी योजनाएं, पशु अस्पताल व कृषि विज्ञान केंद्र, सब एक ही जगह।',
+            en:'This app was built to help the livestock farmers of Uttar Pradesh — breeds, feed, vaccination, diseases, government schemes, veterinary hospitals and Krishi Vigyan Kendras, all in one place.'},
+  // tiles
+  tiles:[
+    {id:'kvk',emo:'🔬',cls:'t-kvk',hi:'कृषि विज्ञान केंद्र',en:'KVK'},
+    {id:'calc',emo:'🧮',cls:'t-calc',hi:'आहार कैलकुलेटर',en:'Feed Calculator'},
+    {id:'district',emo:'📍',cls:'t-dist',hi:'जिलेवार अस्पताल',en:'Districts'},
+    {id:'breeds',emo:'🐃',cls:'t-breed',hi:'नस्ल',en:'Breeds'},
+    {id:'feed',emo:'🌾',cls:'t-feed',hi:'आहार प्रबंधन',en:'Feed'},
+    {id:'vaccine',emo:'💉',cls:'t-vac',hi:'टीकाकरण',en:'Vaccination'},
+    {id:'disease',emo:'🩺',cls:'t-dis',hi:'रोग',en:'Diseases'},
+    {id:'scheme',emo:'📜',cls:'t-sch',hi:'सरकारी योजनाएं',en:'Schemes'},
+    {id:'articles',emo:'📄',cls:'t-articles',hi:'लेख',en:'Articles'},
+    {id:'help',emo:'📞',cls:'t-help',hi:'सहायता व संपर्क',en:'Help'},
+    {id:'about',emo:'👨‍⚕️',cls:'t-about',hi:'परिचय',en:'About'}
+  ],
+  // district
+  dsearch:{hi:'जिला खोजें…',en:'Search district…'},
+  distNote:{hi:'जिला चुनें → "नक्शे पर पशु अस्पताल" दबाएँ। Google Maps में आपके जिले के सरकारी पशु चिकित्सालय, पॉलीक्लिनिक व औषधालय सटीक स्थान, रास्ते और फ़ोन नंबर सहित खुलेंगे (हमेशा ताज़ा जानकारी)। आपातकाल में 1962 पूरे राज्य में उपलब्ध है।',
+            en:'Pick a district → tap "Vet hospitals on map". Google Maps opens your district\u2019s government veterinary hospitals, polyclinics and dispensaries with exact locations, directions and phone numbers (always up to date). For emergencies, 1962 works statewide.'},
+  dpanel:{hi:function(d){return d+' के सरकारी पशु चिकित्सालय, पॉलीक्लिनिक व औषधालय — नक्शे पर सटीक स्थान, रास्ता और फ़ोन नंबर देखें। घर पर मोबाइल पशु इकाई के लिए 1962 पर कॉल करें।';},
+          en:function(d){return 'Government veterinary hospitals, polyclinics & dispensaries in '+d+' — see exact locations, directions and phone numbers on the map. For a Mobile Veterinary Unit at home, call 1962.';}},
+  dmap:{hi:'नक्शे पर पशु अस्पताल',en:'Vet hospitals on map'},
+  doffice:{hi:'जिला पशुपालन कार्यालय',en:'District animal husbandry office'},
+  dcall:{hi:'1962 कॉल करें',en:'Call 1962'},
+  kvksearch:{hi:'जिला खोजें…',en:'Search district…'},
+  kvkNote:{hi:'यह सूची ICAR की है (यूपी में कुल ~89 KVK)। जिस जिले में एक से अधिक KVK हैं, वे "KVK 1", "KVK 2" के रूप में दिखते हैं — साथ में गाँव का नाम भी। "नक्शे पर देखें" से उस KVK का स्थान व रास्ता, और "वेबसाइट / जानकारी" से आधिकारिक जानकारी खुलती है।',
+           en:'This list is from ICAR (about 89 KVKs in UP). Where a district has more than one KVK, they are shown as "KVK 1", "KVK 2" with the village name too. "See on map" opens that KVK\u2019s location & directions; "Website / info" opens its official page.'},
+  kvkmap:{hi:'नक्शे पर देखें',en:'See on map'},
+  kvkweb:{hi:'वेबसाइट / जानकारी',en:'Website / info'},
+  kvkPortal:{hi:'राष्ट्रीय KVK पोर्टल',en:'National KVK portal'},
+  kvkInfoH:{hi:'KVK क्या है?',en:'What is a KVK?'},
+  kvkInfo:{hi:'कृषि विज्ञान केंद्र (ICAR) किसानों के लिए फ़ार्म साइंस सेंटर हैं — प्रशिक्षण, मिट्टी व पानी जाँच, उन्नत बीज व पौध, फसल व पशुपालन सलाह, और नई तकनीक का प्रदर्शन। लगभग हर जिले में एक KVK है (यूपी में करीब 86)।',
+           en:'Krishi Vigyan Kendras (ICAR) are farm science centres for farmers — training, soil & water testing, improved seeds & saplings, crop & livestock advice, and demonstrations of new technology. Almost every district has one (about 86 in UP).'},
+  kvkPanel:{hi:function(d){return d+' का कृषि विज्ञान केंद्र नक्शे पर देखें — सटीक स्थान, रास्ता व फ़ोन नंबर। कुछ जिलों में एक से अधिक KVK हो सकते हैं।';},
+            en:function(d){return 'See the Krishi Vigyan Kendra in '+d+' on the map — exact location, directions and phone number. Some districts may have more than one KVK.';}},
+  // calc
+  l_type:{hi:'पशु का प्रकार',en:'Animal type'},
+  opt_cow:{hi:'गाय',en:'Cow'}, opt_buf:{hi:'भैंस',en:'Buffalo'},
+  l_bw:{hi:'शरीर का वज़न (किग्रा)',en:'Body weight (kg)'},
+  l_milk:{hi:'प्रतिदिन दूध (लीटर)',en:'Daily milk (litres)'},
+  l_price:{hi:'दाना का भाव (₹ प्रति किग्रा)',en:'Concentrate price (₹ per kg)'},
+  c_btn:{hi:'गणना करें',en:'Calculate'},
+  calcNote:{hi:'यह केवल अनुमान है, थम्ब-रूल पर आधारित। असली मात्रा नस्ल, आहार व दूध पर निर्भर करती है — पशु चिकित्सक/स्थानीय सलाह से समायोजित करें।',
+            en:'This is an estimate based on thumb rules. Actual amounts vary with breed, feed and yield — adjust with vet/local advice.'},
+  r_dm:{hi:'शुष्क पदार्थ',en:'Dry matter'},
+  r_green:{hi:'हरा चारा',en:'Green fodder'},
+  r_dry:{hi:'सूखा चारा (भूसा)',en:'Dry fodder (bhusa)'},
+  r_conc:{hi:'दाना (कंसन्ट्रेट)',en:'Concentrate (dana)'},
+  r_min:{hi:'खनिज मिश्रण',en:'Mineral mixture'},
+  r_water:{hi:'स्वच्छ पानी',en:'Clean water'},
+  r_cost:{hi:'दाना का खर्च',en:'Concentrate cost'},
+  perday:{hi:'/दिन',en:'/day'}, permonth:{hi:'/माह',en:'/month'},
+  unit_kg:{hi:'किग्रा',en:'kg'}, unit_g:{hi:'ग्राम',en:'g'}, unit_l:{hi:'ली',en:'L'},
+  collegesH:{hi:'यूपी में पशु चिकित्सा महाविद्यालय',en:'Veterinary colleges in UP'},
+  collegesLead:{hi:'यूपी के प्रमुख सरकारी/केंद्रीय पशु चिकित्सा संस्थान (BVSc व उच्च शिक्षा)। नक्शे पर स्थान देखें।',en:'Major government / central veterinary institutions in UP (BVSc and higher study). Tap the map to see the location.'},
+  cmap:{hi:'नक्शा',en:'Map'}, web:{hi:'वेबसाइट',en:'Website'},
+  dphoto:{hi:'असली फ़ोटो देखें',en:'See real photos'},
+  breedPhoto:{hi:'कैसी दिखती है — फ़ोटो',en:'How it looks — photos'}
+};
+
+/* ============ CONTENT DATA ============ */
+var BREEDS = {
+  cattle:{hi:'गाय',en:'Cattle',items:[
+    {n:'Sahiwal',nat:'साहीवाल',y:{hi:'2,000–3,000 ली / ब्यात',en:'2,000–3,000 L / lactation'},
+     l:{hi:'सबसे अच्छी देसी दुधारू गाय। लाल-भूरी, ढीली त्वचा, गर्मी व चिचड़ी सहनशील। पूरे यूपी में पाली जाती है।',
+        en:'Best indigenous dairy cow. Reddish-brown, loose skin, very heat- and tick-tolerant. Widely kept across UP.'},
+     t:{hi:['दूध','गर्मी सहनशील','मज़बूत'],en:['Milk','Heat tolerant','Hardy']}},
+    {n:'Gir',nat:'गिर',y:{hi:'1,600–2,500 ली / ब्यात',en:'1,600–2,500 L / lactation'},
+     l:{hi:'गुम्बदाकार माथा व मुड़े सींग। रोग-प्रतिरोधी और मज़बूत; A2 दूध डेयरी में लोकप्रिय।',
+        en:'Domed forehead and curved horns. Disease-resistant and hardy; popular for A2 milk dairies.'},
+     t:{hi:['दूध','रोग-प्रतिरोधी'],en:['Milk','Disease resistant']}},
+    {n:'Gangatiri',nat:'गंगातीरी',y:{hi:'900–1,500 ली / ब्यात',en:'900–1,500 L / lactation'},
+     l:{hi:'पूर्वी यूपी के गंगा क्षेत्र की देसी नस्ल। स्थानीय परिस्थितियों के अनुकूल, दोहरे उपयोग वाली।',
+        en:'Native to the Ganga belt of eastern UP. Hardy dual-purpose cattle suited to local conditions.'},
+     t:{hi:['दूध व बैल','स्थानीय नस्ल'],en:['Milk + draught','Local breed']}},
+    {n:'Hariana',nat:'हरियाणा',y:{hi:'1,000–1,600 ली / ब्यात',en:'1,000–1,600 L / lactation'},
+     l:{hi:'पश्चिमी यूपी में आम। दोहरा उपयोग — मध्यम दूध और खेत हेतु मज़बूत बैल।',
+        en:'Common in western UP. Dual-purpose — moderate milk plus strong bullocks for field work.'},
+     t:{hi:['दूध व बैल'],en:['Milk + draught']}},
+    {n:'Tharparkar',nat:'थारपारकर',y:{hi:'1,800–2,600 ली / ब्यात',en:'1,800–2,600 L / lactation'},
+     l:{hi:'सफ़ेद/स्लेटी, अत्यधिक गर्मी सहनशील। सूखे में भी अच्छा दूध देती है।',
+        en:'White/grey, very heat tolerant. A good milker that also does well in dry conditions.'},
+     t:{hi:['दूध','सूखा सहनशील'],en:['Milk','Drought hardy']}},
+    {n:'Crossbred (HF/Jersey \u00d7 Desi)',nat:'संकर',y:{hi:'3,000–5,000 ली / ब्यात',en:'3,000–5,000 L / lactation'},
+     l:{hi:'सबसे अधिक दूध, पर बेहतर आहार, छाया व देखभाल ज़रूरी। देसी नस्लों से कम गर्मी सहनशील।',
+        en:'Highest milk yield, but needs better feed, shade, and management. Less heat-tolerant than desi breeds.'},
+     t:{hi:['अधिक दूध','अच्छी देखभाल ज़रूरी'],en:['High milk','Needs good care']}}
+  ]},
+  buffalo:{hi:'भैंस',en:'Buffalo',items:[
+    {n:'Murrah',nat:'मुर्रा',y:{hi:'1,500–2,500+ ली / ब्यात',en:'1,500–2,500+ L / lactation'},
+     l:{hi:'सबसे उत्तम भैंस, पूरे यूपी में प्रमुख। काली रंगत, कसे मुड़े सींग। दूध में वसा ~7%।',
+        en:'The top dairy buffalo, dominant across UP. Jet-black with tightly curled horns. Milk fat around 7%.'},
+     t:{hi:['अधिक दूध','अधिक वसा'],en:['High milk','High fat']}},
+    {n:'Bhadawari',nat:'भदावरी',y:{hi:'800–1,200 ली · वसा 13% तक',en:'800–1,200 L · fat up to 13%'},
+     l:{hi:'यूपी की देसी नस्ल (आगरा–इटावा / चंबल)। मात्रा कम पर वसा बहुत अधिक (13% तक) — घी हेतु उत्तम।',
+        en:'Native to UP (Agra–Etawah / Chambal). Lower volume but very high fat (up to 13%) — excellent for ghee.'},
+     t:{hi:['घी हेतु उत्तम','यूपी देसी'],en:['Best for ghee','UP native']}},
+    {n:'Nili-Ravi',nat:'नीली-रावी',y:{hi:'1,800–2,500 ली / ब्यात',en:'1,800–2,500 L / lactation'},
+     l:{hi:'सफ़ेद धब्बे और "दीवार आँखें"। उत्तर-पश्चिम भारत में पाली जाने वाली अच्छी दुधारू भैंस।',
+        en:'Marked by "wall eyes" and white patches. A heavy milker kept in parts of north-west India.'},
+     t:{hi:['अधिक दूध'],en:['High milk']}}
+  ]},
+  goat:{hi:'बकरी',en:'Goat',items:[
+    {n:'Jamunapari',nat:'जमुनापारी',y:{hi:'~1.5–2 ली / दिन',en:'~1.5–2 L / day'},
+     l:{hi:'इटावा (यमुना क्षेत्र), यूपी की देसी बकरी। बड़ी, ऊँची, रोमन नाक। दूध व मांस दोनों।',
+        en:'Native to Etawah (Yamuna belt), UP. Large, tall, Roman nose. Dual-purpose for milk and meat.'},
+     t:{hi:['दूध व मांस','यूपी देसी'],en:['Milk + meat','UP native']}},
+    {n:'Barbari',nat:'बरबरी',y:{hi:'अधिक प्रजनन · बाड़ा-पालन',en:'Prolific · stall-fed friendly'},
+     l:{hi:'छोटी, गठीली व अधिक बच्चे देने वाली (अक्सर जुड़वाँ)। बाड़े में पालने योग्य; अच्छा दूध व मांस।',
+        en:'Small, compact, and very prolific (often twins). Ideal for stall-feeding; good milk and meat.'},
+     t:{hi:['मांस व दूध','यूपी देसी'],en:['Meat + milk','UP native']}}
+  ]}
+};
+
+var FEED = [
+  {ic:'🧮',h:{hi:'दैनिक मूल नियम',en:'Daily thumb rules'},b:{
+    hi:['शुष्क पदार्थ: शरीर के वज़न का लगभग 2.5–3% प्रतिदिन।',
+        'संतुलित आहार = हरा चारा + सूखा चारा + दाना + खनिज मिश्रण + स्वच्छ पानी।',
+        'दाना: रख-रखाव हेतु ~1 किग्रा, और हर 2–2.5 ली दूध पर 1 किग्रा अतिरिक्त।',
+        'खनिज मिश्रण: 30–50 ग्राम रोज़ + नमक। कमज़ोर हड्डियाँ व बांझपन रोकता है।',
+        'स्वच्छ पानी: 40–80 ली/दिन (गर्मी व दूध देने के समय अधिक)।'],
+    en:['Dry matter: feed about 2.5–3% of body weight each day.',
+        'Balanced ration = green fodder + dry fodder + concentrate + mineral mixture + clean water.',
+        'Concentrate: ~1 kg for maintenance, plus 1 kg per 2–2.5 L of milk produced.',
+        'Mineral mixture: 30–50 g daily + salt. Prevents weak bones and poor fertility.',
+        'Clean water: 40–80 L/day (more in summer and during lactation).']}},
+  {ic:'🌱',h:{hi:'हरा चारा',en:'Green fodder'},lead:{hi:'वयस्क गाय/भैंस को रोज़ 15–20 किग्रा हरा चारा दें।',en:'Aim for 15–20 kg of green fodder daily for an adult cow/buffalo.'},b:{
+    hi:['रबी (सर्दी): बरसीम, रिजका (लूसर्न), जई।','खरीफ (बारिश): मक्का, ज्वार, बाजरा, हाइब्रिड नेपियर घास।'],
+    en:['Rabi (winter): berseem, lucerne (rijka), oats.','Kharif (monsoon): maize, jowar, bajra, hybrid napier grass.']}},
+  {ic:'🌾',h:{hi:'सूखा चारा',en:'Dry fodder'},lead:{hi:'गेहूँ का भूसा या धान का पुआल, ~4–6 किग्रा/दिन। कुट्टी करके दें ताकि बर्बादी कम हो।',en:'Wheat straw (bhusa) or paddy straw, about 4–6 kg/day. Chaff it (kutti) to cut wastage.'}},
+  {ic:'🐄',h:{hi:'गर्भवती व दुधारू पशु',en:'Pregnant & milking animals'},b:{
+    hi:['स्टीमिंग अप: ब्यांत से पहले आख़िरी 2 माह में अतिरिक्त दाना दें — मज़बूत बछड़ा व अच्छा दूध।',
+        'दाना हरे चारे के साथ या पहले दें।','तय समय पर खिलाना व दुहना दूध स्थिर रखता है।'],
+    en:['Steaming up: give extra concentrate in the last 2 months of pregnancy for a strong calf and good milk.',
+        'Feed concentrate along with or before green fodder.','Fixed feeding and milking times keep yield steady.']}}
+];
+var FEEDNOTE = {hi:'सुझाव: आहार अचानक बदलने से अफारा व बदहज़मी होती है। चारा 4–5 दिन में धीरे-धीरे बदलें।',
+                en:'Tip: Sudden feed changes cause bloat and indigestion. Change fodder gradually over 4–5 days.'};
+
+var VACC = {
+  head:{hi:['रोग','पहली खुराक','दोहराव'],en:['Disease','First dose','Repeat']},
+  rows:[
+    {d:'FMD',nat:'खुरपका-मुँहपका',f:{hi:'आयु 4 माह',en:'4 months of age'},r:{hi:'1 माह बाद बूस्टर, फिर हर 6 माह',en:'Booster after 1 month, then every 6 months'}},
+    {d:'HS',nat:'गलघोटू',f:{hi:'6 माह से ऊपर',en:'6 months+'},r:{hi:'हर साल, बारिश से पहले (प्रभावित क्षेत्र)',en:'Yearly, before monsoon (endemic areas)'}},
+    {d:'BQ',nat:'लंगड़ा बुखार',f:{hi:'6 माह से ऊपर',en:'6 months+'},r:{hi:'हर साल, बारिश से पहले (प्रभावित क्षेत्र)',en:'Yearly, before monsoon (endemic areas)'}},
+    {d:'Brucellosis',nat:'ब्रूसीलोसिस',f:{hi:'मादा बछड़ी, 4–8 माह',en:'Female calves, 4–8 months'},r:{hi:'जीवन में एक बार',en:'Once in lifetime'}},
+    {d:'LSD',nat:'लम्पी',f:{hi:'सरकारी अभियान अनुसार',en:'As per govt drive'},r:{hi:'हर साल / प्रकोप के समय',en:'Yearly / during outbreaks'}}
+  ],
+  practiceH:{hi:'अच्छी आदतें',en:'Good practice'},
+  practice:{hi:['नियमित कृमिनाशक दें (पशु चिकित्सक की सलाह से), खासकर बछड़ों को।',
+                'केवल स्वस्थ पशुओं को टीका; तारीख़ों का रिकॉर्ड कार्ड रखें।',
+                'HS व BQ बारिश में सबसे घातक — मानसून से पहले टीका लगवाएँ।'],
+            en:['Deworm animals regularly (as advised by your vet), especially calves.',
+                'Vaccinate only healthy animals; keep a record card with dates.',
+                'HS & BQ hit hardest in the rainy season — vaccinate before monsoon.']},
+  note:{hi:'स्थानीय पुष्टि करें: सही समय-सारणी व टीके की उपलब्धता जिले अनुसार अलग हो सकती है। मौजूदा अभियान हेतु 1962 या ब्लॉक पशु चिकित्सालय से संपर्क करें।',
+        en:'Confirm locally: exact schedule and vaccine availability vary by district. Call 1962 or your block veterinary hospital for the current drive.'}
+};
+
+var DISEASE = {
+  labels:{sign:{hi:'लक्षण',en:'Signs'},prev:{hi:'बचाव',en:'Prevent'}},
+  items:[
+    {n:'Foot & Mouth Disease',nat:'खुरपका-मुँहपका',
+     s:{hi:'बुखार, लार गिरना, मुँह व खुरों के बीच छाले/घाव, लंगड़ाना, दूध अचानक घटना।',en:'Fever, drooling, blisters/ulcers in mouth and between hooves, lameness, sudden milk drop.'},
+     p:{hi:'हर 6 माह FMD टीका; बीमार पशु अलग रखें।',en:'FMD vaccine every 6 months; isolate affected animals.'}},
+    {n:'Haemorrhagic Septicaemia',nat:'गलघोटू (HS)',
+     s:{hi:'तेज़ बुखार, गले/गर्दन में सूजन, साँस लेने में कठिनाई; बारिश में अचानक मृत्यु।',en:'High fever, swelling of throat/neck, breathing difficulty; can cause sudden death in monsoon.'},
+     p:{hi:'बारिश से पहले हर साल टीका।',en:'Yearly vaccine before the rains.'}},
+    {n:'Black Quarter',nat:'लंगड़ा बुखार (BQ)',
+     s:{hi:'अचानक लंगड़ाना, पिछली टाँग में गरम-दर्द भरी सूजन (चरचराहट), तेज़ बुखार।',en:'Sudden lameness, hot painful swelling in hindquarter muscles with crackling sound, high fever.'},
+     p:{hi:'हर साल BQ टीका।',en:'Yearly BQ vaccine.'}},
+    {n:'Lumpy Skin Disease',nat:'लम्पी (LSD)',
+     s:{hi:'पूरे शरीर पर कठोर गाँठें, बुखार, आँख/नाक बहना, दूध घटना। काटने वाले कीड़ों से फैलता है।',en:'Firm nodules all over the skin, fever, watery eyes/nose, milk drop. Spread by biting insects.'},
+     p:{hi:'टीका लगवाएँ, मक्खी/चिचड़ी/मच्छर नियंत्रण, बीमार पशु अलग रखें।',en:'Vaccinate, control flies/ticks/mosquitoes, isolate sick animals.'}},
+    {n:'Mastitis',nat:'थनैला',
+     s:{hi:'थन में सूजन, गरमी, कड़ापन; दूध में थक्के/खून; पानी जैसा दूध।',en:'Swollen, hot, hard udder; clots or blood in milk; watery milk.'},
+     p:{hi:'साफ़ हाथ व थन, पूरा दूध निकालें, टीट-डिप, सूखे काल की देखभाल, साफ़ फर्श।',en:'Clean hands & udder, full milking, teat-dip, dry-cow care, clean floor.'}},
+    {n:'Milk Fever',nat:'दुग्ध ज्वर',
+     s:{hi:'ब्यांत के आसपास अधिक दूध देने वाली में — खड़ी न हो पाना, ठंडे कान, सुस्ती। आपात स्थिति।',en:'Around calving in high-yielders — unable to stand, cold ears, drowsy. Emergency.'},
+     p:{hi:'गर्भ के अंत में संतुलित कैल्शियम; इलाज हेतु तुरंत पशु चिकित्सक बुलाएँ।',en:'Balanced calcium in late pregnancy; call vet at once for calcium treatment.'}},
+    {n:'Bloat',nat:'अफारा',
+     s:{hi:'बायाँ पेट फूलना, हरा/दलहनी चारा चरने के बाद बेचैनी। आपात स्थिति।',en:'Swollen left flank, restlessness after lush legume grazing. Emergency.'},
+     p:{hi:'अचानक हरा/दलहनी चारा न दें; तुरंत पशु चिकित्सक बुलाएँ।',en:'Avoid sudden lush/legume feeding; call vet urgently.'}},
+    {n:'Brucellosis',nat:'ब्रूसीलोसिस',
+     s:{hi:'गर्भपात (आमतौर पर अंतिम अवस्था), जेर रुकना, बांझपन। मनुष्यों में भी फैलता है।',en:'Abortion (usually late pregnancy), retained placenta, infertility. Spreads to humans.'},
+     p:{hi:'मादा बछड़ी को टीका (4–8 माह); दस्ताने पहनें; गिरे भ्रूण/जेर सावधानी से हटाएँ।',en:'Vaccinate female calves (4–8 months); wear gloves; handle aborted material carefully.'}}
+  ],
+  note:{hi:'महत्वपूर्ण: यह सामान्य जानकारी है, निदान नहीं। बीमार पशु के लिए 1962 या पशु चिकित्सक को तुरंत कॉल करें — जल्दी इलाज पशु व आपकी आमदनी बचाता है।',
+        en:'Important: This is general information, not a diagnosis. For any sick animal, call 1962 or your veterinarian promptly — early treatment saves the animal and your income.'}
+};
+
+var PQ={
+  'Foot & Mouth Disease':'foot and mouth disease cattle mouth hoof lesions',
+  'Haemorrhagic Septicaemia':'haemorrhagic septicaemia cattle neck swelling',
+  'Black Quarter':'black quarter disease cattle leg swelling',
+  'Lumpy Skin Disease':'lumpy skin disease cattle skin nodules',
+  'Mastitis':'mastitis cow udder swelling',
+  'Milk Fever':'milk fever cow down at calving',
+  'Bloat':'bloat cattle distended left flank',
+  'Brucellosis':'brucellosis cattle abortion'
+};
+
+/* ---- built-in disease diagrams (offline) ---- */
+var BASECOW=''+
+  '<path d="M176 48 Q190 66 183 100" fill="none" stroke="#B39B6B" stroke-width="3" stroke-linecap="round"/>'+
+  '<circle cx="183" cy="102" r="4.5" fill="#B39B6B"/>'+
+  '<rect x="100" y="86" width="9" height="46" rx="3.5" fill="#DBCFB2" stroke="#B39B6B" stroke-width="2"/>'+
+  '<rect x="150" y="86" width="9" height="46" rx="3.5" fill="#DBCFB2" stroke="#B39B6B" stroke-width="2"/>'+
+  '<ellipse cx="121" cy="63" rx="57" ry="31" fill="#E9E0CB" stroke="#B39B6B" stroke-width="2.5"/>'+
+  '<path d="M72 48 L50 54 L57 84 L86 84 Z" fill="#E9E0CB" stroke="#B39B6B" stroke-width="2.5" stroke-linejoin="round"/>'+
+  '<ellipse cx="40" cy="66" rx="23" ry="17" fill="#E9E0CB" stroke="#B39B6B" stroke-width="2.5"/>'+
+  '<ellipse cx="21" cy="73" rx="10" ry="8" fill="#DBCFB2" stroke="#B39B6B" stroke-width="2"/>'+
+  '<circle cx="17" cy="73" r="1.6" fill="#7a6a44"/>'+
+  '<path d="M47 51 Q39 44 33 51 Q40 55 47 51Z" fill="#DBCFB2" stroke="#B39B6B" stroke-width="1.6"/>'+
+  '<path d="M50 52 Q53 43 59 43" fill="none" stroke="#B39B6B" stroke-width="3" stroke-linecap="round"/>'+
+  '<circle cx="37" cy="62" r="2.3" fill="#5b4a2e"/>'+
+  '<rect x="84" y="86" width="10" height="47" rx="3.5" fill="#E9E0CB" stroke="#B39B6B" stroke-width="2"/>'+
+  '<rect x="164" y="86" width="10" height="47" rx="3.5" fill="#E9E0CB" stroke="#B39B6B" stroke-width="2"/>'+
+  '<rect x="84" y="127" width="10" height="6" rx="1.5" fill="#8a7550"/>'+
+  '<rect x="164" y="127" width="10" height="6" rx="1.5" fill="#8a7550"/>'+
+  '<rect x="100" y="127" width="9" height="6" rx="1.5" fill="#8a7550"/>'+
+  '<rect x="150" y="127" width="9" height="6" rx="1.5" fill="#8a7550"/>';
+
+var LYINGCOW=''+
+  '<line x1="18" y1="126" x2="212" y2="126" stroke="#D8CDB2" stroke-width="2" stroke-linecap="round"/>'+
+  '<path d="M178 92 q12 6 8 26" fill="none" stroke="#B39B6B" stroke-width="3" stroke-linecap="round"/>'+
+  '<ellipse cx="120" cy="98" rx="62" ry="26" fill="#E9E0CB" stroke="#B39B6B" stroke-width="2.5"/>'+
+  '<path d="M96 121 q10 8 22 3" fill="none" stroke="#B39B6B" stroke-width="2.4" stroke-linecap="round"/>'+
+  '<path d="M140 121 q10 8 22 3" fill="none" stroke="#B39B6B" stroke-width="2.4" stroke-linecap="round"/>'+
+  '<ellipse cx="58" cy="92" rx="20" ry="15" fill="#E9E0CB" stroke="#B39B6B" stroke-width="2.5"/>'+
+  '<ellipse cx="42" cy="99" rx="9" ry="7" fill="#DBCFB2" stroke="#B39B6B" stroke-width="2"/>'+
+  '<path d="M64 79 Q58 72 52 79 Q59 83 64 79Z" fill="#DBCFB2" stroke="#B39B6B" stroke-width="1.5"/>'+
+  '<circle cx="55" cy="90" r="2.2" fill="#5b4a2e"/>';
+
+var OVERLAYS={
+  'Foot & Mouth Disease':''+
+    '<ellipse cx="21" cy="73" rx="13" ry="11" fill="none" stroke="#C62828" stroke-width="2.6"/>'+
+    '<circle cx="16" cy="70" r="1.8" fill="#C62828"/><circle cx="25" cy="69" r="1.6" fill="#C62828"/>'+
+    '<path d="M18 82 q-1 6 1 9" stroke="#2E86C1" stroke-width="2" fill="none" stroke-linecap="round"/>'+
+    '<circle cx="89" cy="130" r="10" fill="none" stroke="#C62828" stroke-width="2.6"/>',
+  'Haemorrhagic Septicaemia':''+
+    '<ellipse cx="60" cy="82" rx="16" ry="11" fill="rgba(198,40,40,.20)" stroke="#C62828" stroke-width="2.4"/>',
+  'Black Quarter':''+
+    '<ellipse cx="150" cy="80" rx="15" ry="13" fill="rgba(198,40,40,.20)" stroke="#C62828" stroke-width="2.4"/>',
+  'Lumpy Skin Disease':''+
+    '<g fill="#A0522D" stroke="#7a3d18" stroke-width="1">'+
+    '<circle cx="100" cy="50" r="4"/><circle cx="116" cy="45" r="4.5"/><circle cx="133" cy="51" r="4"/>'+
+    '<circle cx="146" cy="60" r="4.5"/><circle cx="110" cy="66" r="4"/><circle cx="128" cy="70" r="4.5"/>'+
+    '<circle cx="95" cy="62" r="3.5"/><circle cx="152" cy="72" r="4"/><circle cx="42" cy="64" r="3.3"/>'+
+    '<circle cx="120" cy="57" r="4"/></g>',
+  'Mastitis':''+
+    '<ellipse cx="136" cy="93" rx="15" ry="11" fill="#EEC9C9" stroke="#C62828" stroke-width="2.4"/>'+
+    '<circle cx="130" cy="103" r="2.2" fill="#C62828"/><circle cx="142" cy="103" r="2.2" fill="#C62828"/>',
+  'Milk Fever':''+
+    '<text x="150" y="60" font-size="15" fill="#C62828" font-weight="bold">Z z</text>'+
+    '<path d="M120 34 v20 M113 47 l7 7 l7 -7" stroke="#C62828" stroke-width="2.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>',
+  'Bloat':''+
+    '<path d="M118 33 Q150 18 173 40 Q178 55 168 60 Q150 43 118 44 Z" fill="rgba(198,40,40,.22)" stroke="#C62828" stroke-width="2.4" stroke-linejoin="round"/>',
+  'Brucellosis':''+
+    '<ellipse cx="196" cy="122" rx="16" ry="8" fill="#DBCFB2" stroke="#B39B6B" stroke-width="2"/>'+
+    '<ellipse cx="211" cy="116" rx="7" ry="5.5" fill="#DBCFB2" stroke="#B39B6B" stroke-width="1.8"/>'+
+    '<path d="M150 28 l12 21 h-24 Z" fill="#F6C445" stroke="#C62828" stroke-width="2" stroke-linejoin="round"/>'+
+    '<text x="150" y="47" font-size="13" fill="#7a3d18" font-weight="bold" text-anchor="middle">!</text>'
+};
+
+var CAPS={
+  'Foot & Mouth Disease':{hi:'लाल घेरा: मुँह व खुर में छाले',en:'Red: blisters on mouth & hoof'},
+  'Haemorrhagic Septicaemia':{hi:'लाल: गले/गर्दन में सूजन',en:'Red: throat / neck swelling'},
+  'Black Quarter':{hi:'लाल: पिछली टाँग/जांघ में सूजन',en:'Red: hind-leg / thigh swelling'},
+  'Lumpy Skin Disease':{hi:'पूरी त्वचा पर गाँठें',en:'Nodules all over the skin'},
+  'Mastitis':{hi:'लाल: थन में सूजन',en:'Red: swollen udder'},
+  'Milk Fever':{hi:'पशु बैठ जाता, खड़ा नहीं होता',en:'Animal goes down, cannot stand'},
+  'Bloat':{hi:'लाल: बायाँ पेट फूलना',en:'Red: swollen left flank'},
+  'Brucellosis':{hi:'गर्भपात — बछड़ा गिर जाना',en:'Abortion — calf lost'}
+};
+
+function cowArt(name){
+  var base=(name==='Milk Fever')?LYINGCOW:BASECOW;
+  var overlay=OVERLAYS[name]||'';
+  var cap=CAPS[name]?L(CAPS[name]):'';
+  return '<div class="dart"><svg viewBox="0 0 230 145" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="'+name+'">'+
+    base+overlay+'</svg><span class="dartcap">'+cap+'</span></div>';
+}
+
+var SCHEMES = {
+  items:[
+    {n:'Nand Baba Milk Mission',nat:'नन्द बाबा दुग्ध मिशन',link:'nandbabadugdhmission.up.gov.in',
+     b:{hi:'यूपी की प्रमुख डेयरी योजना (2023, ₹1,000 करोड़)। प्रति पशु दूध बढ़ाना, डेयरी सहकारी समितियाँ व FPO बनाना, और देसी गाय डेयरी इकाइयों (2 गाय से 25 गाय तक) पर सब्सिडी — सीधे बैंक खाते में DBT द्वारा।',
+        en:'UP\u2019s flagship dairy mission (2023, ₹1,000 crore). Boosts per-animal milk, builds dairy cooperatives and FPOs, and gives subsidy for indigenous-cow dairy units (from 2-cow units up to 25-cow units) via DBT to your bank account.'}},
+    {n:'Kamdhenu / Mini / Micro',nat:'कामधेनु',
+     b:{hi:'ऋण व सब्सिडी के साथ अधिक दूध देने वाली डेयरी इकाई लगाने में मदद। मिनी व माइक्रो संस्करण छोटे व सीमांत किसानों हेतु।',
+        en:'Helps set up high-yielding dairy units with loan and subsidy. Mini and Micro versions are sized for small and marginal farmers.'}},
+    {n:'Kisan Credit Card — Animal Husbandry',nat:'KCC',
+     b:{hi:'पशु आहार, चारा व रोज़मर्रा के डेयरी खर्च हेतु कम ब्याज पर कार्यशील पूँजी। बैंक से आवेदन करें।',
+        en:'Working-capital credit for feed, fodder and day-to-day dairy costs at low interest. Apply through your bank.'}},
+    {n:'Rashtriya Gokul Mission',nat:'राष्ट्रीय गोकुल मिशन',
+     b:{hi:'देसी नस्लों के संरक्षण व सुधार तथा दूध बढ़ाने हेतु कृत्रिम गर्भाधान (AI) सेवाओं वाली राष्ट्रीय योजना।',
+        en:'National scheme to conserve and improve indigenous breeds, with AI (artificial insemination) services to raise milk yield.'}},
+    {n:'Free Vaccination — NADCP / LHDCP',nat:'निःशुल्क टीका',
+     b:{hi:'सरकार सभी गोवंश हेतु FMD और ब्रूसीलोसिस का निःशुल्क टीकाकरण देती है। मौजूदा चरण हेतु ब्लॉक पशु चिकित्सालय से पूछें।',
+        en:'Government provides FREE FMD and Brucellosis vaccination for all bovines. Ask your block veterinary hospital about the current round.'}}
+  ],
+  note:{hi:'पात्रता, सब्सिडी राशि व आवेदन प्रक्रिया समय के साथ बदलती है। स्थानीय पशुपालन/डेयरी कार्यालय, पोर्टल animalhusb.upsdc.gov.in, या 1962 के माध्यम से आवेदन करें।',
+        en:'Eligibility, subsidy amounts and application steps change over time. Apply through your local Animal Husbandry / Dairy office, the portal animalhusb.upsdc.gov.in, or by calling 1962.'}
+};
+
+var DISTRICTS = [
+  ['Agra','आगरा'],['Aligarh','अलीगढ़'],['Ambedkar Nagar','अंबेडकर नगर'],['Amethi','अमेठी'],['Amroha','अमरोहा'],
+  ['Auraiya','औरैया'],['Ayodhya','अयोध्या'],['Azamgarh','आज़मगढ़'],['Baghpat','बागपत'],['Bahraich','बहराइच'],
+  ['Ballia','बलिया'],['Balrampur','बलरामपुर'],['Banda','बांदा'],['Barabanki','बाराबंकी'],['Bareilly','बरेली'],
+  ['Basti','बस्ती'],['Bhadohi','भदोही'],['Bijnor','बिजनौर'],['Budaun','बदायूँ'],['Bulandshahr','बुलंदशहर'],
+  ['Chandauli','चंदौली'],['Chitrakoot','चित्रकूट'],['Deoria','देवरिया'],['Etah','एटा'],['Etawah','इटावा'],
+  ['Farrukhabad','फर्रुखाबाद'],['Fatehpur','फतेहपुर'],['Firozabad','फ़िरोज़ाबाद'],['Gautam Buddha Nagar','गौतम बुद्ध नगर'],
+  ['Ghaziabad','गाज़ियाबाद'],['Ghazipur','ग़ाज़ीपुर'],['Gonda','गोंडा'],['Gorakhpur','गोरखपुर'],['Hamirpur','हमीरपुर'],
+  ['Hapur','हापुड़'],['Hardoi','हरदोई'],['Hathras','हाथरस'],['Jalaun','जालौन'],['Jaunpur','जौनपुर'],['Jhansi','झांसी'],
+  ['Kannauj','कन्नौज'],['Kanpur Dehat','कानपुर देहात'],['Kanpur Nagar','कानपुर नगर'],['Kasganj','कासगंज'],
+  ['Kaushambi','कौशांबी'],['Kushinagar','कुशीनगर'],['Lakhimpur Kheri','लखीमपुर खीरी'],['Lalitpur','ललितपुर'],
+  ['Lucknow','लखनऊ'],['Maharajganj','महराजगंज'],['Mahoba','महोबा'],['Mainpuri','मैनपुरी'],['Mathura','मथुरा'],
+  ['Mau','मऊ'],['Meerut','मेरठ'],['Mirzapur','मिर्ज़ापुर'],['Moradabad','मुरादाबाद'],['Muzaffarnagar','मुज़फ्फरनगर'],
+  ['Pilibhit','पीलीभीत'],['Pratapgarh','प्रतापगढ़'],['Prayagraj','प्रयागराज'],['Raebareli','रायबरेली'],['Rampur','रामपुर'],
+  ['Saharanpur','सहारनपुर'],['Sambhal','संभल'],['Sant Kabir Nagar','संत कबीर नगर'],['Shahjahanpur','शाहजहाँपुर'],
+  ['Shamli','शामली'],['Shravasti','श्रावस्ती'],['Siddharthnagar','सिद्धार्थनगर'],['Sitapur','सीतापुर'],
+  ['Sonbhadra','सोनभद्र'],['Sultanpur','सुल्तानपुर'],['Unnao','उन्नाव'],['Varanasi','वाराणसी']
+];
+
+/* All UP KVKs from ICAR list (icar.org.in/hi/node/15021): [district, location, hostType] */
+var KVKS=[
+  ['Ambedkar Nagar','','SAU'],['Sant Kabir Nagar','','SAU'],
+  ['Hathras','Jau-Inyatpur, Sikandara Rau','SAU'],['Deoria','Malhana, Bhatpar Rani','ICAR'],
+  ['Bhadohi','Sant Ravidas Nagar','ICAR'],['Banda','Kamasin','SAU'],['Auraiya','Parwaha','SAU'],
+  ['Kaushambi','Malak Moinuddin, Chayal','NGO'],['Gautam Buddha Nagar','Coat Gaon, Dadri','SAU'],
+  ['Jaunpur','Politechnic Chauraha','SAU'],['Chandauli','Bichiya Agril Farm','SAU'],
+  ['Balrampur','Pach Pedwa','SAU'],['Hamirpur','Kurara','SAU'],['Jalaun','Rura Mallu, Shahjadpur','SAU'],
+  ['Lakhimpur Kheri','Chandan Chauki, Paliya','SAU'],['Lalitpur','Khiria Misra','SAU'],
+  ['Farrukhabad','Lakula','SAU'],['Hardoi','Tatyora','SAU'],['Kushinagar','Sarghatia','ICAR'],
+  ['Sitapur','Amberpur, Sidhauli','NGO'],['Baghpat','Meerut Road','SAU'],['Moradabad','Rustamnagar, Bilari','SAU'],
+  ['Ayodhya','Masodha (Faizabad)','SAU'],['Gorakhpur','Belipur','SAU'],['Maharajganj','Basuli','SAU'],
+  ['Sonbhadra','Tissuhi, Marehan','SAU'],['Azamgarh','Harbanshpur','SAU'],['Barabanki','Haidargarh','SAU'],
+  ['Kanpur Dehat','Daleep Nagar','SAU'],['Mainpuri','Regional Research Station','SAU'],
+  ['Mahoba','Belatal, Jaitpur','SAU'],['Etawah','Ambedkar Agri Engg College','SAU'],
+  ['Kannauj','','SAU'],['Firozabad','Hazaratpur, Ussain','SAU'],['Bulandshahr','Lakhaoti','SAU'],
+  ['Agra','RBS College, Bichpuri','OEI'],['Ghazipur','PG College, Ravindrapuri','NGO'],
+  ['Unnao','Dhaura, Hasanganj','NGO'],['Pratapgarh','Kalakankar','NGO'],['Pilibhit','Work Road','SAU'],
+  ['Shahjahanpur','Niyamatpur','SAU'],['Muzaffarnagar','Baghara, Jalalpur','SAU'],
+  ['Lucknow','IISR, Raebareli Road','ICAR'],['Bijnor','Nagina','SAU'],['Saharanpur','Numaish Camp','SAU'],
+  ['Budaun','Ujhani','SAU'],['Ghaziabad','Muradnagar','SAU'],['Rampur','Dhamaura','SAU'],
+  ['Meerut','Hastinapur','SAU'],['Siddharthnagar','Sohna','SAU'],['Aligarh','Anoopshahar Road','SAU'],
+  ['Prayagraj','Naini (SHUATS)','DU'],['Chitrakoot','Ganiwan, Pahari','NGO'],['Mau','Pilkhi','SAU'],
+  ['Varanasi','Kallipur, Mirzamurad','SAU'],['Basti','Banjariaya, Katiya','SAU'],['Jhansi','Bharari, Bhojla','SAU'],
+  ['Fatehpur','Tharion','SAU'],['Gonda','Gopalgram','NGO'],['Bareilly','IVRI, Izatnagar','ICAR'],
+  ['Ballia','Sohoan','SAU'],['Mathura','Veterinary College (DUVASU)','SAU'],['Raebareli','Dariapur, Munsiganj','SAU'],
+  ['Mirzapur','Barkachha (BHU)','CU'],['Bahraich','Crop Research Station','SAU'],['Etah','RBS College, Awagarh','OEI'],
+  ['Sultanpur','Kamla Nehru Trust','NGO'],['Sitapur','Katia, Biswan','NGO'],['Gorakhpur','Guru Gorakshnath','NGO'],
+  ['Kasganj','Mohanpura','SAU'],['Amethi','Kathora, Jagdishpur','SAU'],['Bahraich','','SAU'],
+  ['Budaun','','SAU'],['Sambhal','','SAU'],['Hapur','Babugarh, Simbhaoli','SAU'],['Shamli','Jalalpur','SAU'],
+  ['Gonda','Maheba Nankar, Manakpur','SAU'],['Amroha','Tarapur, Gajraula','SAU'],
+  ['Sultanpur','Varasin, Dharpatganj','SAU'],['Jaunpur','Amhit, Kirakat','SAU'],
+  ['Ghazipur','Ankushpur, Karanda','SAU'],['Muzaffarnagar','Chittaura, Jansath','SAU'],
+  ['Lakhimpur Kheri','Maheva, Manjhra Farm','ICAR'],['Hardoi','Jaitpur, Sandila','ICAR'],
+  ['Moradabad','Malpura, Thakurdwara','SAU'],['Shravasti','Gabbapur Kala, Bhinga','SAU']
+];
+var HOSTLABEL={
+  SAU:{hi:'राज्य कृषि विश्वविद्यालय',en:'State Agri University'},
+  ICAR:{hi:'ICAR संस्थान',en:'ICAR institute'},
+  NGO:{hi:'एनजीओ',en:'NGO'},
+  CU:{hi:'केंद्रीय विश्वविद्यालय',en:'Central University'},
+  DU:{hi:'डीम्ड विश्वविद्यालय',en:'Deemed University'},
+  OEI:{hi:'शैक्षिक संस्थान',en:'Educational institute'}
+};
+
+/* Your articles. Host the PDFs (see notes) and set file to the URL or 'articles/<name>.pdf'. */
+/* website chrome strings (desktop nav / hero / footer) */
+var WEB={
+  nav_home:{hi:'होम',en:'Home'},
+  nav_art:{hi:'लेख',en:'Articles'},
+  nav_sch:{hi:'योजनाएँ',en:'Schemes'},
+  nav_help:{hi:'सहायता',en:'Help'},
+  nav_about:{hi:'परिचय',en:'About'},
+  nav_dl:{hi:'⬇ ऐप डाउनलोड',en:'⬇ Download App'},
+  hero_badge:{hi:'🐄 उत्तर प्रदेश के पशुपालकों के लिए · 100% निःशुल्क',en:'🐄 For livestock farmers of Uttar Pradesh · 100% Free'},
+  hero_h2:{hi:'पशुपालन की हर जानकारी,<br><em>एक ही जगह।</em>',en:'Everything about livestock,<br><em>in one place.</em>'},
+  hero_sub:{hi:'नस्ल चयन से लेकर टीकाकरण, चारा-लागत कैलकुलेटर, सरकारी योजनाएँ, 75 जिलों के पशु अस्पताल और विशेषज्ञ लेख — हिंदी व अंग्रेज़ी में, बिल्कुल मुफ़्त।',
+            en:'From breed selection to vaccination, feed-cost calculator, government schemes, veterinary hospitals across 75 districts and expert articles — in Hindi & English, completely free.'},
+  hero_dl:{hi:'ऐप डाउनलोड करें<small>ANDROID · APK · FREE</small>',en:'Download the App<small>ANDROID · APK · FREE</small>'},
+  hero_art:{hi:'📄 विशेषज्ञ लेख पढ़ें',en:'📄 Read expert articles'},
+  hero_trust:{hi:'डॉ. एनिमेष पटेल (NDRI, करनाल) द्वारा · कोई विज्ञापन नहीं · कोई लॉगिन नहीं',en:'By Dr. Animesh Patel (NDRI, Karnal) · No ads · No login'},
+  hsos_b:{hi:'पशु एम्बुलेंस — 1962',en:'Animal Ambulance — 1962'},
+  hsos_s:{hi:'निःशुल्क घर पर पशु चिकित्सा · 24×7 कॉल सेंटर',en:'Free doorstep vet care · 24×7 call centre'},
+  hsos_cta:{hi:'कॉल करें ›',en:'Call now ›'},
+  st1:{hi:'जिलों के पशु अस्पताल व संपर्क',en:'districts — hospitals & contacts'},
+  st2:{hi:'विशेषज्ञ लेख (PDF)',en:'expert articles (PDF)'},
+  st3:{hi:'सेवाएँ, गाइड व कैलकुलेटर',en:'services, guides & calculators'},
+  st4:{hi:'भाषाएँ — हिंदी व English',en:'languages — Hindi & English'},
+  svc_h:{hi:'सेवाएँ व <span>उपकरण</span>',en:'Services & <span>Tools</span>'},
+  svc_p:{hi:'किसी भी कार्ड पर क्लिक करें — पूरी जानकारी इसी पृष्ठ पर खुलेगी',en:'Click any card — full details open right on this page'},
+  back:{hi:'← होम पर वापस',en:'← Back to home'},
+  wf_blurb:{hi:'उत्तर प्रदेश के पशुपालकों हेतु निःशुल्क डिजिटल गाइड — नस्ल, स्वास्थ्य, चारा प्रबंधन, सरकारी योजनाएँ व विशेषज्ञ लेख। हिंदी व अंग्रेज़ी में उपलब्ध।',
+            en:'A free digital guide for the livestock farmers of Uttar Pradesh — breeds, health, feed management, government schemes and expert articles. Available in Hindi & English.'},
+  wf_ql:{hi:'त्वरित लिंक',en:'Quick links'},
+  wf_l1:{hi:'नस्ल गाइड',en:'Breed guide'},
+  wf_l2:{hi:'टीकाकरण',en:'Vaccination'},
+  wf_l3:{hi:'आहार कैलकुलेटर',en:'Feed calculator'},
+  wf_l4:{hi:'सरकारी योजनाएँ',en:'Government schemes'},
+  wf_l5:{hi:'विशेषज्ञ लेख (PDF)',en:'Expert articles (PDF)'},
+  wf_l6:{hi:'⬇ Android ऐप डाउनलोड',en:'⬇ Download Android app'},
+  wf_help:{hi:'हेल्पलाइन',en:'Helplines'},
+  wf_t1:{hi:'पशु एम्बुलेंस · 24×7',en:'Animal Ambulance · 24×7'},
+  wf_t2:{hi:'किसान कॉल सेंटर',en:'Kisan Call Centre'},
+  wf_t3:{hi:'DUVASU, मथुरा',en:'DUVASU, Mathura'},
+  wf_bottom:{hi:'© 2026 पशुधन सहायक · डॉ. एनिमेष पटेल · यह जानकारी सामान्य मार्गदर्शन हेतु है — बीमार पशु के लिए 1962 या नज़दीकी पशु चिकित्सक को कॉल करें।',
+             en:'© 2026 Pashudhan Sahayak · Dr. Animesh Patel · This information is general guidance — for a sick animal, call 1962 or your nearest veterinarian.'}
+};
+
+var ARTICLES=[
+  {emo:'🌡️',pages:8,file:'1.pdf',
+   t:{hi:'पशुधन का तनाव प्रबंधन',en:'Livestock Stress Management'},
+   d:{hi:'बेहतर स्वास्थ्य, उन्नत उत्पादकता और स्थायी लाभ की कुंजी',en:'The key to better health, higher productivity and lasting profit'}},
+  {emo:'🐔',pages:8,file:'2.pdf',
+   t:{hi:'शीतकालीन मुर्गी प्रबंधन',en:'Winter Poultry Management'},
+   d:{hi:'सर्दियों में स्वास्थ्य, उत्पादन एवं लाभ की सुनिश्चितता',en:'Securing health, production and profit through winter'}},
+  {emo:'💰',pages:7,file:'3.pdf',
+   t:{hi:'गोबर व गौमूत्र से अतिरिक्त कमाई',en:'Extra Income from Dung & Cow Urine'},
+   d:{hi:'कचरा नहीं, कमाई — पशुपालन का दूसरा खज़ाना',en:'Not waste but wealth — the second treasure of livestock'}},
+  {emo:'🦠',pages:7,file:'4.pdf',
+   t:{hi:'परजीवी नियंत्रण — किलनी, मक्खी व कृमि',en:'Parasite Control — Ticks, Flies & Worms'},
+   d:{hi:'छिपे दुश्मन जो चुपचाप दूध और सेहत चुराते हैं',en:'The hidden enemies that quietly steal milk and health'}}
+];
+
+var HELP = {
+  calls:[
+    {red:true,ic:'🚑',b:{hi:'1962 — पशु एम्बुलेंस',en:'1962 — Animal Ambulance'},s:{hi:'निःशुल्क मोबाइल पशु चिकित्सा इकाई, घर पर इलाज (24×7 कॉल सेंटर)',en:'Free Mobile Veterinary Unit, doorstep treatment (24×7 call centre)'},tel:'1962'},
+    {ic:'🌾',b:{hi:'1800-180-1551 — किसान कॉल सेंटर',en:'1800-180-1551 — Kisan Call Centre'},s:{hi:'निःशुल्क खेती व पशुपालन सलाह',en:'Free farming & livestock advice'},tel:'18001801551'},
+    {ic:'🏥',b:{hi:'DUVASU, मथुरा',en:'DUVASU, Mathura'},s:{hi:'शिक्षण पशु चिकित्सालय · +91-565-2471178',en:'Teaching Veterinary Clinical Complex · +91-565-2471178'},tel:'+915652471178'}
+  ],
+  college:{h:{hi:'यूपी में पशु चिकित्सा महाविद्यालय',en:'Veterinary colleges in UP'},
+    lead:{hi:'यूपी का मुख्य सरकारी पशु चिकित्सा विश्वविद्यालय DUVASU, मथुरा है (पंडित दीन दयाल उपाध्याय पशु चिकित्सा विज्ञान विश्वविद्यालय) — भारत का पहला पशु चिकित्सा महाविद्यालय (1947) व पूर्ण शिक्षण अस्पताल।',
+          en:'The main government veterinary university is DUVASU, Mathura (Pandit Deen Dayal Upadhyaya Pashu Chikitsa Vigyan Vishwavidyalaya) — home to India\u2019s first veterinary college (1947) and a full teaching hospital.'},
+    b:{hi:['पशु चिकित्सा एवं पशुपालन महाविद्यालय, मथुरा (DUVASU के अंतर्गत)।','राज्य भर में कई निजी पशु चिकित्सा / डिप्लोमा महाविद्यालय संबद्ध हैं।'],
+       en:['College of Veterinary Science & Animal Husbandry, Mathura (under DUVASU).','Several private veterinary & AH / diploma colleges are affiliated across the state.']},
+    web:'upvetuniv.edu.in'},
+  nearest:{h:{hi:'नज़दीकी पशु चिकित्सालय',en:'Nearest veterinary hospital'},
+    b:{hi:'यूपी के हर ब्लॉक में सरकारी पशु चिकित्सालय है। नज़दीकी अस्पताल ढूँढने या घर पर मोबाइल पशु इकाई बुलाने हेतु 1962 पर कॉल करें।',
+       en:'Every block in UP has a government veterinary hospital (Pashu Chikitsalaya). To find the nearest one, or get a Mobile Veterinary Unit to your door, call 1962.'}},
+  portals:{h:{hi:'उपयोगी पोर्टल',en:'Useful portals'},
+    items:[['Animal Husbandry Dept, UP','animalhusb.upsdc.gov.in'],['Nand Baba Milk Mission','nandbabadugdhmission.up.gov.in']]}
+};
+
+var COLLEGES=[
+  {n:{hi:'डुवासु (DUVASU), मथुरा',en:'DUVASU, Mathura'},
+   sub:{hi:'पं. दीन दयाल उपाध्याय पशु चिकित्सा विश्वविद्यालय',en:'Pt. Deen Dayal Upadhyaya Veterinary University'},
+   loc:{hi:'मथुरा',en:'Mathura'},type:{hi:'राज्य पशु चिकित्सा विश्वविद्यालय',en:'State veterinary university'},
+   web:'upvetuniv.edu.in',mapq:'DUVASU Veterinary University Mathura'},
+  {n:{hi:'पशु चिकित्सा एवं पशुपालन महाविद्यालय (COVAS), मेरठ',en:'COVAS, Meerut'},
+   sub:{hi:'सरदार वल्लभभाई पटेल कृषि एवं प्रौद्योगिकी विश्वविद्यालय (SVPUAT)',en:'SVPUAT — Sardar Vallabhbhai Patel Univ. of Agri. & Tech.'},
+   loc:{hi:'मेरठ',en:'Meerut'},type:{hi:'राज्य सरकार',en:'State govt'},
+   web:'svpuat.edu.in',mapq:'College of Veterinary Sciences SVPUAT Meerut'},
+  {n:{hi:'पशु चिकित्सा विज्ञान एवं पशुपालन महाविद्यालय, कुमारगंज',en:'College of Vet. Science & A.H., Kumarganj'},
+   sub:{hi:'आचार्य नरेंद्र देव कृषि एवं प्रौद्योगिकी विश्वविद्यालय (ANDUAT), अयोध्या',en:'ANDUAT, Ayodhya'},
+   loc:{hi:'कुमारगंज, अयोध्या',en:'Kumarganj, Ayodhya'},type:{hi:'राज्य सरकार',en:'State govt'},
+   web:'nduat.org',mapq:'College of Veterinary Science ANDUAT Kumarganj Ayodhya'},
+  {n:{hi:'भा.कृ.अनु.प.-आई.वी.आर.आई. (IVRI), इज़्ज़तनगर',en:'ICAR-IVRI, Izatnagar'},
+   sub:{hi:'भारतीय पशु चिकित्सा अनुसंधान संस्थान, बरेली',en:'Indian Veterinary Research Institute'},
+   loc:{hi:'इज़्ज़तनगर, बरेली',en:'Izatnagar, Bareilly'},type:{hi:'ICAR डीम्ड विश्वविद्यालय',en:'ICAR deemed university'},
+   web:'ivri.nic.in',mapq:'ICAR IVRI Izatnagar Bareilly'},
+  {n:{hi:'पशु चिकित्सा एवं पशु विज्ञान संकाय (FVAS), BHU, मिर्ज़ापुर',en:'FVAS, RGSC-BHU, Mirzapur'},
+   sub:{hi:'बनारस हिंदू विश्वविद्यालय (दक्षिणी परिसर, बरकछा)',en:'Banaras Hindu University (South Campus, Barkachha)'},
+   loc:{hi:'बरकछा, मिर्ज़ापुर',en:'Barkachha, Mirzapur'},type:{hi:'केंद्रीय विश्वविद्यालय',en:'Central university'},
+   web:'bhu.ac.in',mapq:'Faculty of Veterinary Animal Sciences RGSC BHU Barkachha Mirzapur'},
+  {n:{hi:'पशु चिकित्सा एवं पशु विज्ञान महाविद्यालय (COVAS), बांदा',en:'COVAS, Banda'},
+   sub:{hi:'बांदा कृषि एवं प्रौद्योगिकी विश्वविद्यालय (BUAT)',en:'Banda University of Agriculture & Technology (BUAT)'},
+   loc:{hi:'बांदा',en:'Banda'},type:{hi:'राज्य सरकार',en:'State govt'},
+   web:'buat.edu.in',mapq:'College of Veterinary Animal Sciences Banda University Agriculture Technology'},
+  {n:{hi:'पशु चिकित्सा एवं पशु विज्ञान महाविद्यालय, RLBCAU, झांसी',en:'COVAS, RLBCAU, Jhansi'},
+   sub:{hi:'रानी लक्ष्मीबाई केंद्रीय कृषि विश्वविद्यालय (परिसर: दतिया)',en:'Rani Lakshmi Bai Central Agri. University (campus at Datia)'},
+   loc:{hi:'झांसी (परिसर: दतिया)',en:'Jhansi (campus at Datia)'},type:{hi:'केंद्रीय विश्वविद्यालय',en:'Central university'},
+   web:'rlbcau.ac.in',mapq:'College of Veterinary Animal Sciences RLBCAU Datia'}
+];
+
+/* ============ RENDER ============ */
+function esc(s){return s;}
+function tags(arr){return arr.map(function(x){return '<span class="tag">'+x+'</span>';}).join('');}
+function bullets(arr){return '<ul class="clean">'+arr.map(function(x){return '<li>'+x+'</li>';}).join('')+'</ul>';}
+
+function renderAll(){
+  document.documentElement.lang = lang;
+  document.getElementById('langBtn').textContent = L(T.langBtn);
+  var lb2=document.getElementById('langBtn2'); if(lb2) lb2.textContent = L(T.langBtn);
+  var nodes=document.querySelectorAll('[data-i18n]');
+  for(var ni=0;ni<nodes.length;ni++){var wk=nodes[ni].getAttribute('data-i18n');if(WEB[wk])nodes[ni].innerHTML=L(WEB[wk]);}
+  document.getElementById('sosT').textContent = L(T.sosT);
+  document.getElementById('sosS').textContent = L(T.sosS);
+  document.getElementById('homeFoot').textContent = L(T.homeFoot);
+  document.getElementById('devCredit').innerHTML = '👨‍⚕️ '+L(T.footerCredit).replace('Dr. Animesh Patel','<span>Dr. Animesh Patel</span>').replace('डॉ. अनिमेष पटेल','<span>डॉ. अनिमेष पटेल</span>');
+  document.getElementById('aboutBody').innerHTML =
+    '<div class="card aboutcard">'+
+      '<div class="avatar"><img src="'+DEV_PHOTO+'" alt="Dr. Animesh Patel"></div>'+
+      '<h3>Dr. Animesh Patel</h3>'+
+      '<div class="degree">B.V.Sc & A.H. · P.G.D.A.W · M.V.Sc</div>'+
+      '<div class="role">'+L(T.devRole)+'</div>'+
+      '<ul class="clean"><li>'+L(T.eduUG)+'</li><li>'+L(T.eduPG)+'</li></ul>'+
+      '<p class="mission">'+L(T.aboutApp)+'</p>'+
+      '<a class="pbtn" style="background:#E7F0E8;color:#14532D;margin-top:10px" href="mailto:animesh.patel281@gmail.com">✉️ animesh.patel281@gmail.com</a>'+
+    '</div>';
+  document.getElementById('homeBtnTxt').textContent = L(T.homeBtn);
+
+  // tiles
+  document.getElementById('tiles').innerHTML = T.tiles.map(function(t){
+    return '<div class="tile '+t.cls+'" onclick="show(\''+t.id+'\')"><div class="emo">'+t.emo+'</div>'+
+      '<div class="hi">'+t[lang]+'</div><div class="en">'+(lang==='hi'?t.en:t.hi)+'</div></div>';
+  }).join('');
+
+  // section heads
+  ['breeds','feed','vaccine','disease','scheme','district','kvk','calc','help','about','articles'].forEach(function(k){
+    document.getElementById('h_'+k).textContent = L(T[k])[0];
+    document.getElementById('s_'+k).textContent = L(T[k])[1];
+  });
+
+  // breeds
+  var bh='';
+  ['cattle','buffalo','goat'].forEach(function(g){
+    var grp=BREEDS[g];
+    var typeq=(g==='cattle'?'cow breed':g==='buffalo'?'buffalo breed':'goat breed');
+    bh+='<div class="grouplabel">'+(lang==='hi'?grp.hi:grp.en)+' · '+(lang==='hi'?grp.en:grp.hi)+'</div>';
+    grp.items.forEach(function(it){
+      var nameq=it.n.replace(/\(.*/,'').trim();
+      var pUrl='https://www.google.com/search?tbm=isch&q='+encodeURIComponent(nameq+' '+typeq+' India');
+      bh+='<div class="card"><h3>'+it.n+' <span class="native">'+it.nat+'</span></h3>'+
+        '<p class="lead">'+L(it.l)+'</p><div class="yield">🥛 '+L(it.y)+'</div>'+
+        '<div>'+tags(L(it.t))+'</div>'+
+        '<a class="pbtn" href="'+pUrl+'" target="_blank" rel="noopener" onclick="return openLink(event,this.href)">📷 '+L(T.breedPhoto)+'</a></div>';
+    });
+  });
+  document.getElementById('breedsBody').innerHTML=bh;
+
+  // feed
+  var fh='';
+  FEED.forEach(function(c){
+    fh+='<div class="card"><h3>'+c.ic+' '+L(c.h)+'</h3>';
+    if(c.lead) fh+='<p class="lead">'+L(c.lead)+'</p>';
+    if(c.b) fh+=bullets(L(c.b));
+    fh+='</div>';
+  });
+  fh+='<div class="note">'+L(FEEDNOTE)+'</div>';
+  document.getElementById('feedBody').innerHTML=fh;
+
+  // vaccine
+  var vh='<div class="card" style="padding:12px"><table class="vtable"><tr>';
+  L(VACC.head).forEach(function(x){vh+='<th>'+x+'</th>';});
+  vh+='</tr>';
+  VACC.rows.forEach(function(r){
+    vh+='<tr><td>'+r.d+'<br><small>'+r.nat+'</small></td><td>'+L(r.f)+'</td><td>'+L(r.r)+'</td></tr>';
+  });
+  vh+='</table></div>';
+  vh+='<div class="card"><h3>📌 '+L(VACC.practiceH)+'</h3>'+bullets(L(VACC.practice))+'</div>';
+  vh+='<div class="note">'+L(VACC.note)+'</div>';
+  document.getElementById('vaccineBody').innerHTML=vh;
+
+  // disease
+  var dh='';
+  DISEASE.items.forEach(function(it){
+    var pUrl='https://www.google.com/search?tbm=isch&q='+encodeURIComponent(PQ[it.n]||(it.n+' cattle symptoms'));
+    dh+='<div class="card"><h3>'+it.n+' <span class="native">'+it.nat+'</span></h3>'+
+      cowArt(it.n)+
+      '<div class="dline"><span class="k">'+L(DISEASE.labels.sign)+':</span> '+L(it.s)+'</div>'+
+      '<div class="dline pv"><span class="k">'+L(DISEASE.labels.prev)+':</span> '+L(it.p)+'</div>'+
+      '<a class="pbtn" href="'+pUrl+'" target="_blank" rel="noopener" onclick="return openLink(event,this.href)">📷 '+L(T.dphoto)+'</a></div>';
+  });
+  dh+='<div class="note">'+L(DISEASE.note)+'</div>';
+  document.getElementById('diseaseBody').innerHTML=dh;
+
+  // schemes
+  var sh='';
+  SCHEMES.items.forEach(function(it){
+    sh+='<div class="card"><h3>'+it.n+' <span class="native">'+it.nat+'</span></h3><p>'+L(it.b)+'</p>';
+    if(it.link) sh+='<p class="lead">'+(lang==='hi'?'पोर्टल':'Portal')+': <a class="link" href="https://'+it.link+'" target="_blank" rel="noopener">'+it.link+'</a></p>';
+    sh+='</div>';
+  });
+  sh+='<div class="note">'+L(SCHEMES.note)+'</div>';
+  document.getElementById('schemeBody').innerHTML=sh;
+
+  // district statics
+  document.getElementById('dsearch').placeholder = L(T.dsearch);
+  document.getElementById('distNote').textContent = L(T.distNote);
+  renderDistricts();
+
+  document.getElementById('kvksearch').placeholder = L(T.kvksearch);
+  document.getElementById('kvkNote').textContent = L(T.kvkNote);
+  document.getElementById('kvkInfoCard').innerHTML = '<h3>🔬 '+L(T.kvkInfoH)+'</h3><p>'+L(T.kvkInfo)+'</p>'+
+    '<a class="pbtn" href="https://kvk.icar.gov.in" target="_blank" rel="noopener" onclick="return openLink(event,this.href)" style="background:#E7F0E8;color:#14532D">🌐 '+L(T.kvkPortal)+'</a>';
+  renderKVK();
+
+  // calc statics
+  document.getElementById('l_type').textContent=L(T.l_type);
+  document.getElementById('c_type').options[0].textContent=L(T.opt_cow);
+  document.getElementById('c_type').options[1].textContent=L(T.opt_buf);
+  document.getElementById('l_bw').textContent=L(T.l_bw);
+  document.getElementById('l_milk').textContent=L(T.l_milk);
+  document.getElementById('l_price').textContent=L(T.l_price);
+  document.getElementById('c_btn').textContent=L(T.c_btn);
+  document.getElementById('calcNote').textContent=L(T.calcNote);
+  if(document.getElementById('c_result').style.display!=='none') calcFeed();
+
+  // help
+  var hh='';
+  HELP.calls.forEach(function(c){
+    hh+='<a class="callbtn'+(c.red?' red':'')+'" href="tel:'+c.tel+'"><div class="cic">'+c.ic+'</div>'+
+      '<div class="ct"><b>'+L(c.b)+'</b><span>'+L(c.s)+'</span></div><div class="arrow">›</div></a>';
+  });
+  var ch='<div class="card"><h3>🎓 '+L(T.collegesH)+'</h3><p class="lead">'+L(T.collegesLead)+'</p>';
+  COLLEGES.forEach(function(c){
+    var mUrl='https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(c.mapq);
+    ch+='<div class="college"><div class="cn">'+L(c.n)+'</div><div class="csub">'+L(c.sub)+'</div>'+
+      '<div class="cmeta"><span class="badge">'+L(c.type)+'</span>📍 '+L(c.loc)+'</div>'+
+      '<div class="cbtns"><a class="cbtn map" href="'+mUrl+'" target="_blank" rel="noopener" onclick="return openLink(event,this.href)">🗺️ '+L(T.cmap)+'</a>'+
+      (c.web?'<a class="cbtn web" href="https://'+c.web+'" target="_blank" rel="noopener" onclick="return openLink(event,this.href)">🌐 '+L(T.web)+'</a>':'')+
+      '</div></div>';
+  });
+  ch+='</div>';
+  hh+=ch;
+  hh+='<div class="card"><h3>🏥 '+L(HELP.nearest.h)+'</h3><p>'+L(HELP.nearest.b)+'</p></div>';
+  hh+='<div class="card"><h3>🌐 '+L(HELP.portals.h)+'</h3><ul class="clean">'+
+      HELP.portals.items.map(function(p){return '<li>'+p[0]+': <a class="link" href="https://'+p[1]+'" target="_blank" rel="noopener">'+p[1]+'</a></li>';}).join('')+'</ul></div>';
+  document.getElementById('helpBody').innerHTML=hh;
+
+  var ah2='';
+  if(ARTICLES.length===0){
+    ah2='<div class="card"><p class="lead">'+(lang==='hi'?'लेख जल्द ही जोड़े जाएंगे।':'Articles coming soon.')+'</p></div>';
+  } else {
+    ARTICLES.forEach(function(a,i){
+      var pg=a.pages?' · '+a.pages+(lang==='hi'?' पृष्ठ':' pages'):'';
+      ah2+='<div class="card artcard a'+(i+1)+'">'+
+        '<div class="artcover"><span class="artemo">'+(a.emo||'📄')+'</span><span class="artpg">PDF'+pg+'</span></div>'+
+        '<h3>'+L(a.t)+'</h3>'+(a.d?'<p class="lead">'+L(a.d)+'</p>':'')+
+        '<a class="artview" href="'+a.file+'" target="_blank" rel="noopener" onclick="return openLink(event,this.href)">👁 '+L(T.articleOpen)+'<span class="av">›</span></a></div>';
+    });
+  }
+  document.getElementById('articlesBody').innerHTML=ah2;
+}
+
+function renderDistricts(){
+  var q=(document.getElementById('dsearch').value||'').trim().toLowerCase();
+  var html='';
+  DISTRICTS.forEach(function(d,i){
+    var en=d[0],hi=d[1];
+    if(q && en.toLowerCase().indexOf(q)===-1 && hi.indexOf(q)===-1) return;
+    var name=(lang==='hi'?hi:en), other=(lang==='hi'?en:hi);
+    var mapUrl='https://www.google.com/maps/search/?api=1&query='+encodeURIComponent('government veterinary hospital in '+en+', Uttar Pradesh');
+    var offUrl='https://www.google.com/search?q='+encodeURIComponent(en+' district animal husbandry veterinary nic.in');
+    html+='<div class="drow" id="dr'+i+'" onclick="toggleDistrict('+i+')">'+
+      '<div class="dtop"><div class="dn">'+name+' <small>'+other+'</small></div><div class="chev">›</div></div>'+
+      '<div class="dpanel"><p>'+L(T.dpanel)(name)+'</p><div class="dbtns">'+
+        '<a class="dbtn map" href="'+mapUrl+'" target="_blank" rel="noopener" onclick="return openLink(event,this.href)">🗺️ '+L(T.dmap)+'<span class="dba">›</span></a>'+
+        '<a class="dbtn office" href="'+offUrl+'" target="_blank" rel="noopener" onclick="return openLink(event,this.href)">🏛️ '+L(T.doffice)+'<span class="dba">›</span></a>'+
+        '<a class="dbtn call" href="tel:1962" onclick="event.stopPropagation()">📞 '+L(T.dcall)+'<span class="dba">›</span></a>'+
+      '</div></div></div>';
+  });
+  if(!html) html='<div class="card"><p class="lead">'+(lang==='hi'?'कोई जिला नहीं मिला।':'No district found.')+'</p></div>';
+  document.getElementById('dlist').innerHTML=html;
+}
+function toggleDistrict(i){ document.getElementById('dr'+i).classList.toggle('open'); }
+
+function renderKVK(){
+  var q=(document.getElementById('kvksearch').value||'').trim().toLowerCase();
+  var hiMap={}; DISTRICTS.forEach(function(d){ hiMap[d[0]]=d[1]; });
+  var list=KVKS.map(function(k,idx){return {d:k[0],loc:k[1],host:k[2],idx:idx};});
+  list.sort(function(a,b){ return a.d===b.d ? a.loc.localeCompare(b.loc) : a.d.localeCompare(b.d); });
+  var counts={}; list.forEach(function(k){ counts[k.d]=(counts[k.d]||0)+1; });
+  var seq={}; list.forEach(function(k){ seq[k.d]=(seq[k.d]||0)+1; k.seq=seq[k.d]; k.total=counts[k.d]; });
+  var html='';
+  list.forEach(function(k){
+    var hitxt=hiMap[k.d]||k.d;
+    var dName=(lang==='hi'?hitxt:k.d);
+    if(q && k.d.toLowerCase().indexOf(q)===-1 && hitxt.indexOf(q)===-1 && (k.loc||'').toLowerCase().indexOf(q)===-1) return;
+    var title='KVK '+dName+(k.total>1?' – '+k.seq:'');
+    var small=k.loc?k.loc:'';
+    var q1=k.loc?('Krishi Vigyan Kendra '+k.loc+' '+k.d+' Uttar Pradesh'):('Krishi Vigyan Kendra '+k.d+' district Uttar Pradesh');
+    var mapUrl='https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(q1);
+    var webUrl='https://www.google.com/search?q='+encodeURIComponent('Krishi Vigyan Kendra '+k.d+' '+(k.loc||'')+' Uttar Pradesh official website');
+    var sub=(k.loc?k.loc+' · ':'')+'<b>'+L(HOSTLABEL[k.host])+'</b>';
+    html+='<div class="drow" id="kr'+k.idx+'" onclick="toggleKVK('+k.idx+')">'+
+      '<div class="dtop"><div class="dn">'+title+(small?' <small>'+small+'</small>':'')+'</div><div class="chev">›</div></div>'+
+      '<div class="dpanel"><p>'+sub+'</p><div class="dbtns">'+
+        '<a class="dbtn map" href="'+mapUrl+'" target="_blank" rel="noopener" onclick="return openLink(event,this.href)">🗺️ '+L(T.kvkmap)+'<span class="dba">›</span></a>'+
+        '<a class="dbtn office" href="'+webUrl+'" target="_blank" rel="noopener" onclick="return openLink(event,this.href)">🌐 '+L(T.kvkweb)+'<span class="dba">›</span></a>'+
+      '</div></div></div>';
+  });
+  if(!html) html='<div class="card"><p class="lead">'+(lang==='hi'?'कोई KVK नहीं मिला।':'No KVK found.')+'</p></div>';
+  document.getElementById('kvklist').innerHTML=html;
+}
+function toggleKVK(i){ document.getElementById('kr'+i).classList.toggle('open'); }
+
+function openLink(e,url){
+  if(e){ e.stopPropagation(); }
+  try{
+    var w=window.open(url,'_blank');
+    if(!w||w.closed||typeof w.closed==='undefined'){ window.location.href=url; }
+  }catch(err){ window.location.href=url; }
+  return false;
+}
+
+function calcFeed(){
+  var bw=parseFloat(document.getElementById('c_bw').value)||0;
+  var milk=parseFloat(document.getElementById('c_milk').value)||0;
+  var price=parseFloat(document.getElementById('c_price').value)||0;
+  if(bw<=0){ document.getElementById('c_result').style.display='none'; return; }
+  var dm=(bw*0.0275);
+  var green=Math.round(bw*0.045);
+  var dry=(bw*0.0125);
+  var conc=(1.5 + milk/2.25);
+  var mineral=Math.round(30+bw/20); if(mineral>60)mineral=60;
+  var water=Math.round(bw*0.1 + milk*3);
+  var costDay=Math.round(conc*price);
+  var costMonth=costDay*30;
+  var U=T; var kg=L(U.unit_kg),g=L(U.unit_g),l=L(U.unit_l),pd=L(U.perday),pm=L(U.permonth);
+  function row(ic,label,val,cls){return '<div class="rrow'+(cls?' '+cls:'')+'"><div class="rl"><span class="ric">'+ic+'</span>'+label+'</div><div class="rv">'+val+'</div></div>';}
+  var h='';
+  h+=row('⚖️',L(U.r_dm),dm.toFixed(1)+' '+kg+' '+pd);
+  h+=row('🌱',L(U.r_green),'~'+green+' '+kg+' '+pd);
+  h+=row('🌾',L(U.r_dry),dry.toFixed(1)+' '+kg+' '+pd);
+  h+=row('🥣',L(U.r_conc),conc.toFixed(1)+' '+kg+' '+pd);
+  h+=row('🧂',L(U.r_min),mineral+' '+g+' '+pd);
+  h+=row('💧',L(U.r_water),'~'+water+' '+l+' '+pd);
+  h+=row('💰',L(U.r_cost),'₹'+costDay+' '+pd+' · ₹'+costMonth+' '+pm,'cost');
+  var r=document.getElementById('c_result'); r.innerHTML=h; r.style.display='block';
+}
+
+/* ============ NAV ============ */
+var sections=['breeds','feed','vaccine','disease','scheme','district','kvk','calc','help','about','articles'];
+function show(id){
+  document.getElementById('home').style.display='none';
+  sections.forEach(function(s){document.getElementById(s).classList.remove('active');});
+  document.getElementById(id).classList.add('active');
+  document.getElementById('backBtn').classList.add('show');
+  document.body.classList.add('insection');
+  window.scrollTo(0,0);
+}
+function goHome(){
+  sections.forEach(function(s){document.getElementById(s).classList.remove('active');});
+  document.getElementById('home').style.display='block';
+  document.getElementById('backBtn').classList.remove('show');
+  document.body.classList.remove('insection');
+  window.scrollTo(0,0);
+}
+function toggleLang(){ lang=(lang==='hi'?'en':'hi'); renderAll(); }
+
+renderAll();
+</script>
+</body>
+</html>
